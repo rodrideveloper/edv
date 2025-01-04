@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>496833297972-p1vd6593oeqi4s7an2a7v0dr10b1ut3k.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.496833297972-p1vd6593oeqi4s7an2a7v0dr10b1ut3k</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>496833297972-ek2jlour4ao9rfkgggvupd2opskun8fg.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD-gz2RoziRYKf20L4hL6idnJh7wry3wBs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>496833297972</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.academia.estilodevida.estilodevida</string>
+	<key>PROJECT_ID</key>
+	<string>estilodevida-8e453</string>
+	<key>STORAGE_BUCKET</key>
+	<string>estilodevida-8e453.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:496833297972:ios:7b21cf1d2fdeb3849a9461</string>
+</dict>
+</plist>
