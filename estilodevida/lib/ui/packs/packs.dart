@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estilodevida/ui/packs/widgets/buy_button.dart';
-import 'package:estilodevida/ui/packs/widgets/pack_card.dart';
 import 'package:estilodevida/ui/widgets/common_appbar.dart';
 import 'package:estilodevida/ui/widgets/common_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
