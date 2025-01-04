@@ -26,19 +26,119 @@ class BuyButton extends StatefulWidget {
 
 class _BuyButtonState extends State<BuyButton> {
   bool loading = false;
+
+  Future<void> _showPaymentDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: const BorderSide(color: Colors.white, width: 0),
+          ),
+          titlePadding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+          actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          title: Text(
+            'Elige tu método de pago',
+            style: GoogleFonts.roboto(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 8),
+              Text(
+                'Selecciona una opción de pago para continuar.',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.roboto(
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
+          ),
+          actions: [
+            Align(
+              alignment: Alignment.center,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                icon: const Icon(
+                  Icons.account_balance_wallet_outlined,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  'Mercado Pago',
+                  style: GoogleFonts.roboto(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _launchURL(context, widget.pack);
+                },
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: purple,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                icon: const Icon(
+                  Icons.monetization_on_outlined,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  'Efectivo / Transferencia',
+                  style: GoogleFonts.roboto(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  manualPay();
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> manualPay() async {
+    // Lógica para manejar el pago manual (efectivo/transferencia)
+    debugPrint('Pago en efectivo/transferencia');
+    // Aquí podrías navegar a otra pantalla con tus instrucciones:
+    // Navigator.push(context, MaterialPageRoute(builder: (_) => PagoManualScreen()));
+  }
+
   Future<void> _buyPack(
     BuildContext context,
     PackOption pack,
     String uid,
   ) async {
     try {
-      await _launchURL(context, pack);
+      await _showPaymentDialog(context);
     } catch (err, stack) {
       FirebaseCrashlytics.instance.recordError(
         err,
         stack,
         fatal: true,
-        reason: 'Error en launchUrl',
+        reason: 'Error en _buyPack',
       );
     }
   }
@@ -50,6 +150,7 @@ class _BuyButtonState extends State<BuyButton> {
     try {
       final user = context.read<User?>();
       final theme = Theme.of(context);
+
       final result =
           await HttpService(baseUrl: baseUrl).post(createPreferenceEndPoint, {
         'itemId': pack.id,
@@ -85,10 +186,11 @@ class _BuyButtonState extends State<BuyButton> {
       );
     } catch (err, stack) {
       errorHandler(
-          err: err,
-          stack: stack,
-          reason: 'Error en Buy Button',
-          information: []);
+        err: err,
+        stack: stack,
+        reason: 'Error en Buy Button',
+        information: [],
+      );
       if (mounted) {
         showMessage();
       }
@@ -103,18 +205,19 @@ class _BuyButtonState extends State<BuyButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () async {
-        setState(() {
-          loading = true;
-        });
-        await _buyPack(context, widget.pack, widget.uid);
-        setState(() {
-          loading = false;
-        });
-      },
+      onPressed: loading
+          ? null
+          : () async {
+              setState(() => loading = true);
+              await _buyPack(context, widget.pack, widget.uid);
+              setState(() => loading = false);
+            },
       style: ElevatedButton.styleFrom(
         backgroundColor: purple,
         padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
       child: !loading
           ? Text(
