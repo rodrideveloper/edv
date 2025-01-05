@@ -11,8 +11,10 @@ class RegisterLessonModel {
   @TimestampConverter()
   final DateTime date;
   final String? userPhoto;
+  final int? lessons;
 
-  RegisterLessonModel({
+  RegisterLessonModel(
+    this.lessons, {
     required this.id,
     required this.userName,
     required this.date,

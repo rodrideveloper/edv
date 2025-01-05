@@ -196,7 +196,9 @@ app.post('/registerLesson', async (req, res) => {
         // Seleccionar el pack más antiguo
         const packDoc = activePacks[0];
         const packData = packDoc.data();
+        const lessons = packData.totalLessons;
         const packId = packDoc.id;
+
 
         const packRef = packsRef.doc(packId);
 
@@ -234,6 +236,7 @@ app.post('/registerLesson', async (req, res) => {
                 packId: packId,
                 userName: userName,
                 userPhoto: userPhoto,
+                lessons: lessons,
                 date: admin.firestore.FieldValue.serverTimestamp(),
             });
         });

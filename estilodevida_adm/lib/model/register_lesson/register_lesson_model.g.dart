@@ -8,6 +8,7 @@ part of 'register_lesson_model.dart';
 
 RegisterLessonModel _$RegisterLessonModelFromJson(Map<String, dynamic> json) =>
     RegisterLessonModel(
+      (json['lessons'] as num?)?.toInt(),
       id: json['id'] as String,
       userName: json['userName'] as String?,
       date: const TimestampConverter().fromJson(json['date'] as Timestamp),
@@ -30,5 +31,6 @@ Map<String, dynamic> _$RegisterLessonModelToJson(RegisterLessonModel instance) {
   writeNotNull('userName', instance.userName);
   val['date'] = const TimestampConverter().toJson(instance.date);
   writeNotNull('userPhoto', instance.userPhoto);
+  writeNotNull('lessons', instance.lessons);
   return val;
 }
