@@ -2,6 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:estilodevida_adm/model/register_lesson/register_lesson_model.dart';
 import 'package:estilodevida_adm/service/register_lesson_service.dart';
 import 'package:estilodevida_adm/ui/register_lesson/widget/register_lesson_title.dart';
+import 'package:estilodevida_adm/ui/user_packs/user_packs.dart';
+import 'package:estilodevida_adm/ui/user_selection/user_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -141,9 +143,14 @@ class RegisterLessonListScreenState extends State<RegisterLessonListScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.settings),
-              title: const Text('Configuraciones'),
+              title: const Text('User Packs'),
               onTap: () {
-                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserSelectionScreen(),
+                  ),
+                );
               },
             ),
             // Agrega más opciones según tus necesidades
