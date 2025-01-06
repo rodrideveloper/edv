@@ -27,7 +27,6 @@ class UserPackCard extends StatelessWidget {
     final isExpired = pack.dueDate.isBefore(now);
     final isExhausted = remainingLessons <= 0;
 
-    // Determinar el estado del pack
     String? packStatus;
     if (isExpired) {
       packStatus = 'VENCIDO';
@@ -36,7 +35,7 @@ class UserPackCard extends StatelessWidget {
     } else if (isActivePack) {
       packStatus = 'ACTIVO';
     } else {
-      packStatus = null; // No mostrar etiqueta
+      packStatus = null;
     }
 
     // Colores basados en el estado

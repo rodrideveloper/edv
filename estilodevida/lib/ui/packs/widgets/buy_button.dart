@@ -1,5 +1,6 @@
 import 'package:estilodevida/error_handler.dart';
 import 'package:estilodevida/services/http_service/http_service.dart';
+import 'package:estilodevida/services/user_pack_service.dart/user_pack_service.dart';
 import 'package:estilodevida/ui/constants.dart';
 import 'package:estilodevida/ui/packs/packs.dart';
 import 'package:estilodevida/ui/widgets/snackbar.dart';
@@ -7,8 +8,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+enum Method { efectivo, transferencia }
 
 class BuyButton extends StatefulWidget {
   const BuyButton({
@@ -101,7 +105,7 @@ class _BuyButtonState extends State<BuyButton> {
                   color: Colors.white,
                 ),
                 label: Text(
-                  'Efectivo / Transferencia',
+                  'Transferencia',
                   style: GoogleFonts.roboto(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
@@ -109,7 +113,33 @@ class _BuyButtonState extends State<BuyButton> {
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  manualPay();
+                  manualPay(Method.transferencia);
+                },
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: purple,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                icon: const Icon(
+                  Icons.monetization_on_outlined,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  'Efectivo',
+                  style: GoogleFonts.roboto(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  manualPay(Method.efectivo);
                 },
               ),
             ),
@@ -119,11 +149,45 @@ class _BuyButtonState extends State<BuyButton> {
     );
   }
 
-  Future<void> manualPay() async {
-    // Lógica para manejar el pago manual (efectivo/transferencia)
-    debugPrint('Pago en efectivo/transferencia');
-    // Aquí podrías navegar a otra pantalla con tus instrucciones:
-    // Navigator.push(context, MaterialPageRoute(builder: (_) => PagoManualScreen()));
+  Future<void> manualPay(Method method) async {
+    final user = context.read<User>();
+    try {
+      await UserPackService().addManualPay(
+        widget.pack,
+        user,
+        method,
+      );
+      GoRouter.of(context).push('/success');
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Pronto se te acreditara tu pack',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: purple,
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } catch (err, stack) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Error al registrar pago manual.',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: purple,
+          duration: Duration(seconds: 3),
+        ),
+      );
+
+      errorHandler(err: err, stack: stack, reason: 'Pago manual', information: [
+        {
+          'user': user.uid,
+          'pack': widget.pack.id,
+        }
+      ]);
+    }
   }
 
   Future<void> _buyPack(

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estilodevida/ui/packs/widgets/buy_button.dart';
-import 'package:estilodevida/ui/packs/widgets/pack_card.dart';
 import 'package:estilodevida/ui/widgets/common_appbar.dart';
 import 'package:estilodevida/ui/widgets/common_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,6 +21,16 @@ class PackOption {
     required this.unitPrice,
     required this.dueDays,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'lessons': lessons,
+      'unitPrice': unitPrice,
+      'dueDays': dueDays,
+    };
+  }
 }
 
 class PackSelectionScreen extends StatefulWidget {
@@ -83,7 +92,7 @@ class _PackSelectionScreenState extends State<PackSelectionScreen> {
                         );
                       }
 
-                      final packOptions = packDocs.map((doc) {
+                      List<PackOption> packOptions = packDocs.map((doc) {
                         return PackOption(
                           id: doc.id,
                           title: doc['title'],
@@ -92,6 +101,9 @@ class _PackSelectionScreenState extends State<PackSelectionScreen> {
                           dueDays: doc['dueDays'],
                         );
                       }).toList();
+
+                      packOptions
+                          .sort((a, b) => b.lessons.compareTo(a.lessons));
 
                       return PageView.builder(
                         controller: PageController(viewportFraction: 0.8),

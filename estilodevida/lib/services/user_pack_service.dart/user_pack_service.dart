@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:estilodevida/models/manual_pay/manual_pay.dart';
 import 'package:estilodevida/models/user_pack/user_pack.dart';
+import 'package:estilodevida/ui/packs/packs.dart';
+import 'package:estilodevida/ui/packs/widgets/buy_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserPackService {
   Stream<List<UserPackModel>> getUserPacksStream(String userId) {
@@ -57,5 +61,28 @@ class UserPackService {
 
       return activePack;
     });
+  }
+
+  Future<void> addManualPay(
+    PackOption pack,
+    User user,
+    Method method,
+  ) async {
+    final docRef = FirebaseFirestore.instance.collection('manual_pay').doc();
+
+    final data = {
+      'id': docRef.id,
+      'date': Timestamp.fromDate(DateTime.now()),
+      'packName': pack.title,
+      'packId': pack.id,
+      'userName': user.displayName,
+      'userId': user.uid,
+      'status': false,
+      'metodo': method.name,
+    };
+
+    final manualPay = ManualPayModel.fromJson(data);
+
+    return await docRef.set(manualPay.toJson());
   }
 }
