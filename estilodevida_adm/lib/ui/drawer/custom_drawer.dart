@@ -22,15 +22,21 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.home),
+            leading: const Icon(
+              Icons.home,
+              color: blue,
+            ),
             title: const Text('Inicio'),
             onTap: () {
               Navigator.of(context).pop();
             },
           ),
           ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Usuarios packs'),
+            leading: const Icon(
+              Icons.person,
+              color: blue,
+            ),
+            title: const Text('Usuarios'),
             onTap: () {
               Navigator.push(
                 context,
@@ -41,7 +47,10 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.pause_circle),
+            leading: const Icon(
+              Icons.settings,
+              color: blue,
+            ),
             title: const Text('A/B/M Pack'),
             onTap: () {
               Navigator.push(
@@ -53,7 +62,10 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.handshake),
+            leading: const Icon(
+              Icons.handshake,
+              color: blue,
+            ),
             title: const Text('Pagos Manaules'),
             onTap: () {
               Navigator.push(

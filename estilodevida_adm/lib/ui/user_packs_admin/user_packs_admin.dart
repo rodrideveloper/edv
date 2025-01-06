@@ -1,5 +1,6 @@
 import 'package:estilodevida_adm/model/pack/pack_model.dart';
 import 'package:estilodevida_adm/model/user_pack/user_pack.dart';
+import 'package:estilodevida_adm/service/pack_service.dart';
 import 'package:estilodevida_adm/service/user_packs_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -290,7 +291,7 @@ class _UserPackAdminScreenState extends State<UserPackAdminScreen> {
   }
 
   Future<void> _addNewPack() async {
-    final packsStream = _service.getAllPacks();
+    final packsStream = PackService().getAllPacks();
 
     showDialog(
       context: context,
@@ -345,8 +346,6 @@ class _UserPackAdminScreenState extends State<UserPackAdminScreen> {
                 width: double.maxFinite,
                 child: ListView.builder(
                   shrinkWrap: true,
-                  // Evita el desplazamiento interno del ListView
-                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: packs.length,
                   itemBuilder: (context, index) {
                     final pack = packs[index];
@@ -442,67 +441,154 @@ class _UserPackAdminScreenState extends State<UserPackAdminScreen> {
     showDialog(
       context: context,
       builder: (ctx) {
-        return AlertDialog(
-          title: const Text('Editar Pack'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: dueDateController,
-                decoration: const InputDecoration(
-                  labelText: 'Fecha de Vencimiento (YYYY-MM-DD)',
-                ),
-                keyboardType: TextInputType.datetime,
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child: _buildDialogContent(
+              ctx, dueDateController, usedLessonsController, userPack),
+        );
+      },
+    );
+  }
+
+  Widget _buildDialogContent(
+      BuildContext ctx,
+      TextEditingController dueDateController,
+      TextEditingController usedLessonsController,
+      UserPackModel userPack) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10.0,
+            offset: Offset(0.0, 10.0),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Título del Dialog
+          const Text(
+            'Editar Pack',
+            style: TextStyle(
+              fontSize: 22.0,
+              fontWeight: FontWeight.w600,
+              color: purple,
+            ),
+          ),
+          const SizedBox(height: 20.0),
+          // Campo de Fecha de Vencimiento
+          TextField(
+            controller: dueDateController,
+            decoration: InputDecoration(
+              labelText: 'Fecha de Vencimiento (YYYY-MM-DD)',
+              labelStyle: const TextStyle(color: purple),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: blue),
               ),
-              TextField(
-                controller: usedLessonsController,
-                decoration:
-                    const InputDecoration(labelText: 'Lecciones Usadas'),
-                keyboardType: TextInputType.number,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: purple),
+              ),
+            ),
+            keyboardType: TextInputType.datetime,
+          ),
+          const SizedBox(height: 15.0),
+          // Campo de Lecciones Usadas
+          TextField(
+            controller: usedLessonsController,
+            decoration: InputDecoration(
+              labelText: 'Lecciones Usadas',
+              labelStyle: const TextStyle(color: purple),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: blue),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: purple),
+              ),
+            ),
+            keyboardType: TextInputType.number,
+          ),
+          const SizedBox(height: 25.0),
+          // Botones de Acción
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              // Botón Cancelar
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: const Text(
+                  'Cancelar',
+                  style: TextStyle(color: blue, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(width: 10),
+              // Botón Guardar
+              ElevatedButton(
+                onPressed: () async {
+                  final parsedDate =
+                      DateTime.tryParse(dueDateController.text.trim());
+                  final parsedUsed =
+                      int.tryParse(usedLessonsController.text.trim());
+
+                  if (parsedDate == null || parsedUsed == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Datos inválidos.'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+
+                  final updatedPack = UserPackModel(
+                    id: userPack.id,
+                    userName: userPack.userName,
+                    packId: userPack.packId,
+                    buyDate: userPack.buyDate,
+                    dueDate: parsedDate,
+                    totalLessons: userPack.totalLessons,
+                    usedLessons: parsedUsed,
+                  );
+
+                  await _service.updateUserPack(
+                    userId: widget.userId,
+                    userPack: updatedPack,
+                  );
+                  if (!mounted) return;
+                  Navigator.of(ctx).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  'Guardar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text('Cancelar'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                final parsedDate =
-                    DateTime.tryParse(dueDateController.text.trim());
-                final parsedUsed =
-                    int.tryParse(usedLessonsController.text.trim());
-
-                if (parsedDate == null || parsedUsed == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Datos inválidos.')),
-                  );
-                  return;
-                }
-
-                final updatedPack = UserPackModel(
-                  id: userPack.id,
-                  userName: userPack.userName,
-                  packId: userPack.packId,
-                  buyDate: userPack.buyDate,
-                  dueDate: parsedDate,
-                  totalLessons: userPack.totalLessons,
-                  usedLessons: parsedUsed,
-                );
-
-                await _service.updateUserPack(
-                  userId: widget.userId,
-                  userPack: updatedPack,
-                );
-                if (!mounted) return;
-                Navigator.of(ctx).pop();
-              },
-              child: const Text('Guardar'),
-            ),
-          ],
-        );
-      },
+        ],
+      ),
     );
   }
 

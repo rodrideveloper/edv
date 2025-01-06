@@ -5,29 +5,29 @@ import 'package:estilodevida_adm/model/user_pack/user_pack.dart';
 class UserPackService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<void> addPack(PackModel pack) async {
-    final docRef = _db.collection('packs').doc();
-    await docRef.set(pack.toJson());
-  }
+  // Future<void> addPack(PackModel pack) async {
+  //   final docRef = _db.collection('packs').doc();
+  //   await docRef.set(pack.toJson());
+  // }
 
-  Future<void> updatePack(String docId, PackModel pack) async {
-    final docRef = _db.collection('packs').doc(docId);
-    await docRef.update(pack.toJson());
-  }
+  // Future<void> updatePack(String docId, PackModel pack) async {
+  //   final docRef = _db.collection('packs').doc(docId);
+  //   await docRef.update(pack.toJson());
+  // }
 
-  Future<void> deletePack(String docId) async {
-    final docRef = _db.collection('packs').doc(docId);
-    await docRef.delete();
-  }
+  // Future<void> deletePack(String docId) async {
+  //   final docRef = _db.collection('packs').doc(docId);
+  //   await docRef.delete();
+  // }
 
-  /// Obtiene la lista de todos los [PackModel] de la colección "packs"
-  Stream<List<PackModel>> getAllPacks() {
-    return _db.collection('packs').snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) {
-        return PackModel.fromJson(doc.data());
-      }).toList();
-    });
-  }
+  // /// Obtiene la lista de todos los [PackModel] de la colección "packs"
+  // Stream<List<PackModel>> getAllPacks() {
+  //   return _db.collection('packs').snapshots().map((snapshot) {
+  //     return snapshot.docs.map((doc) {
+  //       return PackModel.fromJson(doc.data());
+  //     }).toList();
+  //   });
+  // }
 
   /// Obtiene la lista de [UserPackModel] para un usuario de la colección "users/{userId}/packs"
   Stream<List<UserPackModel>> getUserPacks(String userId) {

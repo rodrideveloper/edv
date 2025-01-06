@@ -105,7 +105,7 @@ class _PackAdminScreenState extends State<PackAdminScreen> {
                           Icon(Icons.book, color: blue, size: 20),
                           const SizedBox(width: 8),
                           Text(
-                            'Lecciones: ${pack.lessons}',
+                            'Clases: ${pack.lessons}',
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.black87,
@@ -211,7 +211,7 @@ class _PackAdminScreenState extends State<PackAdminScreen> {
                     controller: lessonsController,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
-                      labelText: 'Número de Lecciones',
+                      labelText: 'Número de Clases',
                       hintText: 'Ej. 5',
                     ),
                   ),
@@ -221,7 +221,7 @@ class _PackAdminScreenState extends State<PackAdminScreen> {
                     controller: unitPriceController,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
-                      labelText: 'Precio Unitario (\$)',
+                      labelText: 'Precio (\$)',
                       hintText: 'Ej. 10.0',
                     ),
                   ),

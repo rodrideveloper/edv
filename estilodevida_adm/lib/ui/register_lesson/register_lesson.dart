@@ -1,10 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:estilodevida_adm/model/register_lesson/register_lesson_model.dart';
 import 'package:estilodevida_adm/service/register_lesson_service.dart';
-import 'package:estilodevida_adm/ui/abm_pack/abm_pack.dart';
 import 'package:estilodevida_adm/ui/drawer/custom_drawer.dart';
 import 'package:estilodevida_adm/ui/register_lesson/widget/register_lesson_title.dart';
-import 'package:estilodevida_adm/ui/user_selection/user_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -125,11 +123,13 @@ class RegisterLessonListScreenState extends State<RegisterLessonListScreen> {
         onKeyEvent: _handleKey,
         autofocus: true,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Sección de filtros
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // Filtro por Nombre
                   TextFormField(
@@ -152,6 +152,7 @@ class RegisterLessonListScreenState extends State<RegisterLessonListScreen> {
 
                   // Filtros por Fecha
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
                         child: InkWell(
