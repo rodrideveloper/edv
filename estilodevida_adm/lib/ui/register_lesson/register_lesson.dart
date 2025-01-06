@@ -1,8 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:estilodevida_adm/model/register_lesson/register_lesson_model.dart';
 import 'package:estilodevida_adm/service/register_lesson_service.dart';
+import 'package:estilodevida_adm/ui/abm_pack/abm_pack.dart';
+import 'package:estilodevida_adm/ui/drawer/custom_drawer.dart';
 import 'package:estilodevida_adm/ui/register_lesson/widget/register_lesson_title.dart';
-import 'package:estilodevida_adm/ui/user_packs/user_packs.dart';
 import 'package:estilodevida_adm/ui/user_selection/user_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -116,47 +117,7 @@ class RegisterLessonListScreenState extends State<RegisterLessonListScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
 
-      // Drawer con encabezado y opciones
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: brandPurple,
-              ),
-              child: const Center(
-                child: Text(
-                  'Menú Principal',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Inicio'),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('User Packs'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UserSelectionScreen(),
-                  ),
-                );
-              },
-            ),
-            // Agrega más opciones según tus necesidades
-          ],
-        ),
-      ),
+      drawer: const CustomDrawer(),
 
       // Contenedor principal para el contenido
       body: KeyboardListener(
@@ -410,7 +371,7 @@ class RegisterLessonListScreenState extends State<RegisterLessonListScreen> {
                                   collapsedIconColor: brandBlue,
                                   title: Text(
                                     // Título con "Packs de X lessons (Total: Y)"
-                                    'Packs de $lessonsCount lessons (Total: $totalRegistrosEnPack registros)',
+                                    'Packs de $lessonsCount clases: $totalRegistrosEnPack',
                                     style: const TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold,

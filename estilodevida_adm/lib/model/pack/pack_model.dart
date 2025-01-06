@@ -3,15 +3,17 @@ part 'pack_model.g.dart';
 
 @JsonSerializable(includeIfNull: false, explicitToJson: true)
 class PackModel {
+  final String id;
   final String title;
   final int lessons;
   final int dueDays;
-  final double price;
+  final double unitPrice;
 
   PackModel({
+    required this.id,
     required this.title,
     required this.lessons,
-    required this.price,
+    required this.unitPrice,
     required this.dueDays,
   });
 

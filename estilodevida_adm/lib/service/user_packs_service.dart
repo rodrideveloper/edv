@@ -1,10 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart'; // Opcional, por si se requiere agrupar
 import 'package:estilodevida_adm/model/pack/pack_model.dart';
 import 'package:estilodevida_adm/model/user_pack/user_pack.dart';
 
 class UserPackService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  Future<void> addPack(PackModel pack) async {
+    final docRef = _db.collection('packs').doc();
+    await docRef.set(pack.toJson());
+  }
+
+  Future<void> updatePack(String docId, PackModel pack) async {
+    final docRef = _db.collection('packs').doc(docId);
+    await docRef.update(pack.toJson());
+  }
+
+  Future<void> deletePack(String docId) async {
+    final docRef = _db.collection('packs').doc(docId);
+    await docRef.delete();
+  }
 
   /// Obtiene la lista de todos los [PackModel] de la colección "packs"
   Stream<List<PackModel>> getAllPacks() {
@@ -27,7 +41,7 @@ class UserPackService {
         final data = doc.data();
         return UserPackModel.fromJson({
           ...data,
-          'id': doc.id, // Asignar doc.id como "id"
+          'id': doc.id,
         });
       }).toList();
     });
