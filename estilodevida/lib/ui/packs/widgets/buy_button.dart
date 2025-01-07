@@ -149,7 +149,9 @@ class _BuyButtonState extends State<BuyButton> {
     );
   }
 
-  Future<void> manualPay(Method method) async {
+  Future<void> manualPay(
+    Method method,
+  ) async {
     final user = context.read<User>();
     try {
       await UserPackService().addManualPay(
@@ -157,18 +159,7 @@ class _BuyButtonState extends State<BuyButton> {
         user,
         method,
       );
-      GoRouter.of(context).push('/success');
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Pronto se te acreditara tu pack',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: purple,
-          duration: Duration(seconds: 3),
-        ),
-      );
+      GoRouter.of(context).push('/pending');
     } catch (err, stack) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

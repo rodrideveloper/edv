@@ -8,6 +8,7 @@ import 'package:estilodevida/ui/constants.dart';
 import 'package:estilodevida/ui/login/login_page.dart';
 import 'package:estilodevida/ui/packs/packs.dart';
 import 'package:estilodevida/ui/packs/payment_error.dart';
+import 'package:estilodevida/ui/packs/payment_pending.dart';
 import 'package:estilodevida/ui/packs/payment_success.dart';
 import 'package:estilodevida/ui/register_lesson/register_lesson.dart';
 import 'package:estilodevida/ui/user_pack/user_packs.dart';
@@ -99,7 +100,7 @@ GoRouter createRouter(User? auth) {
       ),
       GoRoute(
         path: '/pending',
-        builder: (_, __) => const PaymentErrorScreen(),
+        builder: (_, __) => const PaymentPendingScreen(),
       ),
     ],
     redirect: (context, state) {
