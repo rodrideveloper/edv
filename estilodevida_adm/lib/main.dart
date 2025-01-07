@@ -1,39 +1,9 @@
-// import 'package:estilodevida_adm/firebase_options.dart';
-// import 'package:estilodevida_adm/home_page.dart';
-// import 'package:firebase_core/firebase_core.dart';
-
-// import 'package:flutter/material.dart';
-
-// Future<void> main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-//   );
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Formulario en Flutter Web',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: const HomePage(),
-//     );
-//   }
-// }
-
 import 'package:estilodevida_adm/firebase_options.dart';
 import 'package:estilodevida_adm/ui/register_lesson/register_lesson.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-const purple = Color(0xFF81327D);
-const blue = Color(0xFF3155A1);
+import 'ui/utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,9 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Estilo de Vida Admin',
-      // Aquí definimos el tema principal de la app
       theme: ThemeData(
-        // Color principal que usará la AppBar, switches, sliders, etc.
         primaryColor: purple,
 
         // Alternativa: usar colorScheme para más control

@@ -3,16 +3,13 @@ import 'package:estilodevida_adm/model/manual_pay/manual_pay.dart';
 import 'package:estilodevida_adm/model/pack/pack_model.dart';
 import 'package:estilodevida_adm/service/manual_pay_service.dart';
 import 'package:estilodevida_adm/service/pack_service.dart';
+import 'package:estilodevida_adm/ui/utils.dart';
 import 'package:flutter/material.dart';
 
-import 'package:intl/intl.dart'; // Para formatear fechas
-
-// Definición de colores
-const purple = Color(0xFF81327D);
-const blue = Color(0xFF3155A1);
+import 'package:intl/intl.dart';
 
 class ManualPayAdminScreen extends StatefulWidget {
-  const ManualPayAdminScreen({Key? key}) : super(key: key);
+  const ManualPayAdminScreen({super.key});
 
   @override
   State<ManualPayAdminScreen> createState() => _ManualPayAdminScreenState();

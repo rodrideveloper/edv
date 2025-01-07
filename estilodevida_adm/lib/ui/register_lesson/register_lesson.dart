@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-import '../utils.dart';
-
 class RegisterLessonListScreen extends StatefulWidget {
   const RegisterLessonListScreen({super.key});
 

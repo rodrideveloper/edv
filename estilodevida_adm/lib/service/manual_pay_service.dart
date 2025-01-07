@@ -31,15 +31,6 @@ class ManualPayService {
     });
   }
 
-  // /// Actualiza el status de un pago manual a true
-  // Future<void> allowNow(String id) async {
-  //   try {
-  //     await _db.collection('manual_pay').doc(id).update({'status': true});
-  //   } catch (e) {
-  //     throw Exception('Error al actualizar el pago: $e');
-  //   }
-  // }
-
   Future<void> allowNow({
     required String manualPayId,
     required String userId,
