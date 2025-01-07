@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
+import '../utils.dart';
+
 class RegisterLessonListScreen extends StatefulWidget {
   const RegisterLessonListScreen({super.key});
 
@@ -320,79 +322,105 @@ class RegisterLessonListScreenState extends State<RegisterLessonListScreen> {
                   // Contador total de lecciones encontradas
                   final totalCount = lessons.length;
 
-                  return Column(
-                    children: [
-                      // Contador en la parte superior
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Card(
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              'Se encontraron $totalCount clases',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                                color: brandPurple,
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.95), // Color de fondo
+                      border: const Border(
+                        top: BorderSide(
+                          color:
+                              Colors.purple, // Color del borde superior púrpura
+                          width: 2.0, // Grosor del borde
+                        ),
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(
+                            20.0), // Redondeo de la esquina inferior izquierda
+                        bottomRight: Radius.circular(
+                            20.0), // Redondeo de la esquina inferior derecha
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 15.0,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        // Contador en la parte superior
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                'Se encontraron $totalCount clases',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: brandPurple,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),
-                      ),
 
-                      // Listado de packs con ExpansionTile agrupados por lessons
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: grouped.keys.length,
-                          itemBuilder: (context, index) {
-                            final lessonsCount = grouped.keys.elementAt(index);
-                            final packLessons = grouped[lessonsCount] ?? [];
+                        // Listado de packs con ExpansionTile agrupados por lessons
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: grouped.keys.length,
+                            itemBuilder: (context, index) {
+                              final lessonsCount =
+                                  grouped.keys.elementAt(index);
+                              final packLessons = grouped[lessonsCount] ?? [];
 
-                            // Contar la cantidad de registros en este grupo
-                            final totalRegistrosEnPack = packLessons.length;
+                              // Contar la cantidad de registros en este grupo
+                              final totalRegistrosEnPack = packLessons.length;
 
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16.0,
-                                vertical: 8.0,
-                              ),
-                              child: Card(
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                  vertical: 8.0,
                                 ),
-                                child: ExpansionTile(
-                                  collapsedBackgroundColor: Colors.grey[100],
-                                  iconColor: brandBlue,
-                                  collapsedIconColor: brandBlue,
-                                  title: Text(
-                                    // Título con "Packs de X lessons (Total: Y)"
-                                    'Packs de $lessonsCount clases: $totalRegistrosEnPack',
-                                    style: const TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black, // Color negro
-                                    ),
+                                child: Card(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  children: packLessons.map((lesson) {
-                                    return RegisterLessonTile(
-                                      lesson: lesson,
-                                      // Para el index global, podemos buscar su posición en la lista completa
-                                      index: lessons.indexOf(lesson),
-                                    );
-                                  }).toList(),
+                                  child: ExpansionTile(
+                                    collapsedBackgroundColor: Colors.grey[100],
+                                    iconColor: brandBlue,
+                                    collapsedIconColor: brandBlue,
+                                    title: Text(
+                                      // Título con "Packs de X lessons (Total: Y)"
+                                      'Packs de $lessonsCount clases: $totalRegistrosEnPack',
+                                      style: const TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black, // Color negro
+                                      ),
+                                    ),
+                                    children: packLessons.map((lesson) {
+                                      return RegisterLessonTile(
+                                        lesson: lesson,
+                                        // Para el index global, podemos buscar su posición en la lista completa
+                                        index: lessons.indexOf(lesson),
+                                      );
+                                    }).toList(),
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 },
               ),

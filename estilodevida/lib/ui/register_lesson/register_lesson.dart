@@ -25,13 +25,6 @@ class _RegisterLessonsState extends State<RegisterLessons> {
 
   void onToken(String token) async {
     if (user == null) {
-      // Mostrar error
-    }
-
-    // Validar Token
-    if (user != null) {
-      registerLesson(user!);
-    } else {
       errorHandler(
         err: 'Error User Null',
         stack: StackTrace.current,
@@ -39,6 +32,33 @@ class _RegisterLessonsState extends State<RegisterLessons> {
             'Uario null en funcion onToke al querer llamar a registerLesson(User) ',
         information: [],
       );
+    }
+    if (token == tokenQR) {
+      registerLesson(user!);
+    } else {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Row(
+            children: [
+              Icon(
+                Icons.crisis_alert_outlined,
+                color: Colors.white,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                'Código QR no válido',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+          backgroundColor: purple,
+          duration: Duration(seconds: 3),
+        ),
+      );
+      Navigator.pop(context);
     }
   }
 
@@ -52,9 +72,27 @@ class _RegisterLessonsState extends State<RegisterLessons> {
         'userPhoto': user.photoURL,
       });
 
-      GlobalMessageService().showMessage(
-        context,
-        'Gracias por registrar tu clase',
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: Colors.white,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                'Gracias por registrar tu clase',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+          backgroundColor: blue,
+          duration: Duration(seconds: 5),
+        ),
       );
 
       if (mounted) {

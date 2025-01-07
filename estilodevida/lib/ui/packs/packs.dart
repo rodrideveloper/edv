@@ -131,19 +131,19 @@ class _PackSelectionScreenState extends State<PackSelectionScreen> {
 
 class PackCard extends StatefulWidget {
   const PackCard({
-    Key? key,
+    super.key,
     required this.pack,
     required this.uid,
-  }) : super(key: key);
+  });
 
   final PackOption pack;
   final String uid;
 
   @override
-  _PackCardState createState() => _PackCardState();
+  PackCardState createState() => PackCardState();
 }
 
-class _PackCardState extends State<PackCard>
+class PackCardState extends State<PackCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
@@ -216,9 +216,9 @@ class _PackCardState extends State<PackCard>
               ),
               const SizedBox(height: 20),
               Text(
-                '${widget.pack.lessons} Clases',
+                widget.pack.title,
                 style: GoogleFonts.roboto(
-                  fontSize: 42,
+                  fontSize: 35,
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
                   shadows: [
@@ -240,7 +240,6 @@ class _PackCardState extends State<PackCard>
                 ),
               ),
               const SizedBox(height: 10),
-              // Añadimos la cantidad de días disponibles
               Text(
                 '${widget.pack.dueDays} días disponibles',
                 style: GoogleFonts.roboto(
@@ -249,7 +248,7 @@ class _PackCardState extends State<PackCard>
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 50),
               BuyButton(pack: widget.pack, uid: widget.uid),
             ],
           ),

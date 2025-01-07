@@ -1,3 +1,4 @@
+import 'package:estilodevida/ui/user_pack/user_pack_card.dart';
 import 'package:flutter/material.dart';
 
 class GlobalMessageService {
@@ -17,7 +18,7 @@ class GlobalMessageService {
     _overlayEntry = _createOverlayEntry(context, message);
     Overlay.of(context).insert(_overlayEntry!);
 
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       hideMessage();
     });
   }
@@ -111,8 +112,7 @@ class _AnimatedMessageWidgetState extends State<_AnimatedMessageWidget>
   @override
   Widget build(BuildContext context) {
     theme = Theme.of(context);
-    final backgroundColor =
-        widget.backgroundColor ?? Color(0xFF3155A1).withOpacity(0.8);
+    const backgroundColor = blue;
     final textColor = widget.textColor ?? Colors.white;
     final iconColor = widget.iconColor ?? Colors.white;
     final icon = widget.icon ?? Icons.check_circle_outline;
@@ -124,12 +124,12 @@ class _AnimatedMessageWidgetState extends State<_AnimatedMessageWidget>
           opacity: _animation,
           child: Container(
             padding:
-                const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+                const EdgeInsets.symmetric(horizontal: 34.0, vertical: 26.0),
             margin: const EdgeInsets.symmetric(horizontal: 40.0),
             decoration: BoxDecoration(
               color: backgroundColor, // Color con transparencia
               borderRadius: BorderRadius.circular(12),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 10,
@@ -143,13 +143,14 @@ class _AnimatedMessageWidgetState extends State<_AnimatedMessageWidget>
                 Icon(
                   icon,
                   color: iconColor,
-                  size: 28,
+                  size: 42,
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Flexible(
                   child: Text(
                     widget.message,
-                    style: theme.textTheme.bodyMedium?.copyWith(
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.titleLarge?.copyWith(
                       color: textColor,
                       fontSize: 16,
                     ),
