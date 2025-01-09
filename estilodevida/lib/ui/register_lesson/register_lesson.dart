@@ -1,6 +1,5 @@
 import 'package:estilodevida/error_handler.dart';
 import 'package:estilodevida/services/http_service/http_service.dart';
-import 'package:estilodevida/services/message_service.dart';
 import 'package:estilodevida/ui/constants.dart';
 import 'package:estilodevida/ui/register_lesson/qr_scanner.dart';
 import 'package:estilodevida/ui/widgets/snackbar.dart';

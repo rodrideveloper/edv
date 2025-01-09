@@ -65,32 +65,32 @@ class _BuyButtonState extends State<BuyButton> {
             ],
           ),
           actions: [
-            Align(
-              alignment: Alignment.center,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                icon: const Icon(
-                  Icons.account_balance_wallet_outlined,
-                  color: Colors.white,
-                ),
-                label: Text(
-                  'Mercado Pago',
-                  style: GoogleFonts.roboto(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _launchURL(context, widget.pack);
-                },
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.center,
+            //   child: ElevatedButton.icon(
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: blue,
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(8),
+            //       ),
+            //     ),
+            //     icon: const Icon(
+            //       Icons.account_balance_wallet_outlined,
+            //       color: Colors.white,
+            //     ),
+            //     label: Text(
+            //       'Mercado Pago',
+            //       style: GoogleFonts.roboto(
+            //         color: Colors.white,
+            //         fontWeight: FontWeight.w600,
+            //       ),
+            //     ),
+            //     onPressed: () {
+            //       Navigator.of(context).pop();
+            //       _launchURL(context, widget.pack);
+            //     },
+            //   ),
+            // ),
             Align(
               alignment: Alignment.center,
               child: ElevatedButton.icon(
@@ -276,6 +276,7 @@ class _BuyButtonState extends State<BuyButton> {
       ),
       child: !loading
           ? Text(
+              textAlign: TextAlign.center,
               'Comprar ahora',
               style: GoogleFonts.roboto(
                 color: Colors.white,
