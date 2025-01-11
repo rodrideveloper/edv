@@ -67,7 +67,6 @@ app.post('/create_preference', async (req, res) => {
     const packId = req.body.packId;
     const lessons = req.body.lessons;
     const dueDays = req.body.dueDays;
-    console.log(dueDays);
 
 
 

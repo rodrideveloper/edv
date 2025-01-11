@@ -45,6 +45,7 @@ class _BuyButtonState extends State<BuyButton> {
           actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           title: Text(
             'Elige tu método de pago',
+            textAlign: TextAlign.center,
             style: GoogleFonts.roboto(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -65,32 +66,6 @@ class _BuyButtonState extends State<BuyButton> {
             ],
           ),
           actions: [
-            // Align(
-            //   alignment: Alignment.center,
-            //   child: ElevatedButton.icon(
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: blue,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(8),
-            //       ),
-            //     ),
-            //     icon: const Icon(
-            //       Icons.account_balance_wallet_outlined,
-            //       color: Colors.white,
-            //     ),
-            //     label: Text(
-            //       'Mercado Pago',
-            //       style: GoogleFonts.roboto(
-            //         color: Colors.white,
-            //         fontWeight: FontWeight.w600,
-            //       ),
-            //     ),
-            //     onPressed: () {
-            //       Navigator.of(context).pop();
-            //       _launchURL(context, widget.pack);
-            //     },
-            //   ),
-            // ),
             Align(
               alignment: Alignment.center,
               child: ElevatedButton.icon(

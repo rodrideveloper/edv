@@ -6,7 +6,9 @@ import 'package:estilodevida/ui/packs/widgets/buy_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserPackService {
-  Stream<List<UserPackModel>> getUserPacksStream(String userId) {
+  Stream<List<UserPackModel>> getUserPacksStream(
+    String userId,
+  ) {
     final packsRef = FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
@@ -16,7 +18,6 @@ class UserPackService {
       List<UserPackModel> packs = snapshot.docs.map((doc) {
         final data = doc.data();
 
-        // Agregar el 'id' al mapa de datos
         data['id'] = doc.id;
 
         return UserPackModel.fromJson(data);
@@ -42,7 +43,9 @@ class UserPackService {
     return packs;
   }
 
-  Stream<UserPackModel?> getActivePackStream(String userId) {
+  Stream<UserPackModel?> getActivePackStream(
+    String userId,
+  ) {
     return getUserPacksStream(userId).map((packs) {
       UserPackModel? activePack;
       final now = DateTime.now();
