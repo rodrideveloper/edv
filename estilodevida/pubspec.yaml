@@ -57,6 +57,7 @@ dependencies:
   connectivity_plus: ^6.0.5
   cached_network_image: ^3.2.3
   flutter_animate: ^4.5.0
+  in_app_update: ^4.2.3
 
 
 dev_dependencies:
