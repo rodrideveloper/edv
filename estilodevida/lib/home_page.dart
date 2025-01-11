@@ -1,8 +1,10 @@
+import 'package:estilodevida/error_handler.dart';
 import 'package:estilodevida/ui/constants.dart';
 import 'package:estilodevida/ui/home_view.dart';
 import 'package:estilodevida/ui/widgets/drawer_menu.dart';
 import 'package:estilodevida/ui/widgets/main_buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +16,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Future<void> setUserToCrashlytics() async {
+    final user = context.watch<User?>();
+    final ref = FirebaseCrashlytics.instance;
+
+    try {
+      if (user != null) {
+        ref.setUserIdentifier(user.uid);
+        ref.setCustomKey('userEmail', user.email!);
+      }
+    } catch (err, stack) {
+      errorHandler(
+        err: err,
+        stack: stack,
+        reason: 'setUserToCrashlytics',
+        information: [],
+      );
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    setUserToCrashlytics();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

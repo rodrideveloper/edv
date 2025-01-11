@@ -45,6 +45,7 @@ class _BuyButtonState extends State<BuyButton> {
           actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           title: Text(
             'Elige tu método de pago',
+            textAlign: TextAlign.center,
             style: GoogleFonts.roboto(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -65,32 +66,6 @@ class _BuyButtonState extends State<BuyButton> {
             ],
           ),
           actions: [
-            Align(
-              alignment: Alignment.center,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                icon: const Icon(
-                  Icons.account_balance_wallet_outlined,
-                  color: Colors.white,
-                ),
-                label: Text(
-                  'Mercado Pago',
-                  style: GoogleFonts.roboto(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _launchURL(context, widget.pack);
-                },
-              ),
-            ),
             Align(
               alignment: Alignment.center,
               child: ElevatedButton.icon(
@@ -149,7 +124,9 @@ class _BuyButtonState extends State<BuyButton> {
     );
   }
 
-  Future<void> manualPay(Method method) async {
+  Future<void> manualPay(
+    Method method,
+  ) async {
     final user = context.read<User>();
     try {
       await UserPackService().addManualPay(
@@ -157,18 +134,7 @@ class _BuyButtonState extends State<BuyButton> {
         user,
         method,
       );
-      GoRouter.of(context).push('/success');
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Pronto se te acreditara tu pack',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: purple,
-          duration: Duration(seconds: 3),
-        ),
-      );
+      GoRouter.of(context).push('/pending');
     } catch (err, stack) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -285,6 +251,7 @@ class _BuyButtonState extends State<BuyButton> {
       ),
       child: !loading
           ? Text(
+              textAlign: TextAlign.center,
               'Comprar ahora',
               style: GoogleFonts.roboto(
                 color: Colors.white,

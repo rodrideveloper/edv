@@ -205,52 +205,54 @@ class PackCardState extends State<PackCard>
               ),
             ],
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 200,
-                child: Image.asset(
-                  'assets/images/logo_edv.png',
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 200,
+                  child: Image.asset(
+                    'assets/images/logo_edv.png',
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                widget.pack.title,
-                style: GoogleFonts.roboto(
-                  fontSize: 35,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 2.0,
-                      color: Colors.black.withOpacity(0.3),
-                      offset: const Offset(0, 1),
-                    ),
-                  ],
+                const SizedBox(height: 20),
+                Text(
+                  widget.pack.title,
+                  style: GoogleFonts.roboto(
+                    fontSize: 35,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 2.0,
+                        color: Colors.black.withOpacity(0.3),
+                        offset: const Offset(0, 1),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                '\$${widget.pack.unitPrice.toStringAsFixed(3)}',
-                style: GoogleFonts.roboto(
-                  fontSize: 28,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
+                const SizedBox(height: 10),
+                Text(
+                  '\$${widget.pack.unitPrice.toStringAsFixed(3)}',
+                  style: GoogleFonts.roboto(
+                    fontSize: 28,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                '${widget.pack.dueDays} días disponibles',
-                style: GoogleFonts.roboto(
-                  fontSize: 20,
-                  color: Colors.grey[700],
-                  fontWeight: FontWeight.w500,
+                const SizedBox(height: 10),
+                Text(
+                  '${widget.pack.dueDays} días disponibles',
+                  style: GoogleFonts.roboto(
+                    fontSize: 20,
+                    color: Colors.grey[700],
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 50),
-              BuyButton(pack: widget.pack, uid: widget.uid),
-            ],
+                const SizedBox(height: 50),
+                BuyButton(pack: widget.pack, uid: widget.uid),
+              ],
+            ),
           ),
         ),
       ),

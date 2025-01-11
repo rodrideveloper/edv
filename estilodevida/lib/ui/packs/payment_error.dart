@@ -21,55 +21,68 @@ class PaymentErrorScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               // Ícono de error con animación
-              const Icon(
-                Icons.error_outline,
-                color: redErrorColor,
-                size: 100,
-              )
-                  .animate()
-                  .shake(duration: 600.ms, hz: 4) // Animación de sacudida
-                  .fadeIn(duration: 600.ms), // Animación de aparición
-              const SizedBox(height: 30),
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.error_outline,
+                        color: redErrorColor,
+                        size: 100,
+                      )
+                          .animate()
+                          .shake(
+                              duration: 600.ms, hz: 4) // Animación de sacudida
+                          .fadeIn(duration: 600.ms), // Animación de aparición
+                      const SizedBox(height: 30),
 
-              // Título principal
-              Text(
-                '¡Algo salió mal!',
-                style: theme.textTheme.headlineLarge?.copyWith(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
+                      // Título principal
+                      Text(
+                        '¡Algo salió mal!',
+                        style: theme.textTheme.headlineLarge?.copyWith(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 10),
 
-              // Mensaje de error
-              Text(
-                'No pudimos procesar tu pedido. Por favor, intenta nuevamente.',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: Colors.black54,
+                      // Mensaje de error
+                      Text(
+                        'No pudimos procesar tu pedido. Por favor intenta nuevamente.',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: Colors.black54,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 40),
+                    ],
+                  ),
                 ),
-                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 40),
 
               // Botón para intentar nuevamente
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () => GoRouter.of(context).push('/'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: buttonColor,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => GoRouter.of(context).push('/'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonColor,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    'Intentar Nuevamente',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                    child: Text(
+                      'Intentar Nuevamente',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

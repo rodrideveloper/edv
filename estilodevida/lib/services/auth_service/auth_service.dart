@@ -64,8 +64,6 @@ class AuthService {
           return AuthResult.error('Demasiadas peticiónes');
         case AuthErrorCode.networkRequestFailed:
           return AuthResult.error('Error de red');
-        default:
-          return AuthResult.error('Error desconocido');
       }
     }
 

@@ -1,11 +1,9 @@
 // // file: lib/ui/user_selection_screen.dart
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estilodevida_adm/model/user/user_model.dart';
 import 'package:estilodevida_adm/service/user_service.dart';
 import 'package:estilodevida_adm/ui/user_packs_admin/user_packs_admin.dart';
 import 'package:cached_network_image/cached_network_image.dart'; // Importar el paquete
-import 'package:intl/intl.dart'; // Para formatear fechas
 
 // Definición de colores elegantes
 const Color accentColor = Color(0xFFFF4081); // Pink Accent

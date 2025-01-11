@@ -8,17 +8,25 @@ import 'package:estilodevida/ui/constants.dart';
 import 'package:estilodevida/ui/login/login_page.dart';
 import 'package:estilodevida/ui/packs/packs.dart';
 import 'package:estilodevida/ui/packs/payment_error.dart';
+import 'package:estilodevida/ui/packs/payment_pending.dart';
 import 'package:estilodevida/ui/packs/payment_success.dart';
 import 'package:estilodevida/ui/register_lesson/register_lesson.dart';
 import 'package:estilodevida/ui/user_pack/user_packs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+Future<void> disableCrashlyticsOnDebug() async {
+  if (kDebugMode) {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +37,8 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+
+  disableCrashlyticsOnDebug();
 
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(
@@ -99,7 +109,7 @@ GoRouter createRouter(User? auth) {
       ),
       GoRoute(
         path: '/pending',
-        builder: (_, __) => const PaymentErrorScreen(),
+        builder: (_, __) => const PaymentPendingScreen(),
       ),
     ],
     redirect: (context, state) {
