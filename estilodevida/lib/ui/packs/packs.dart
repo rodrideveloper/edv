@@ -233,7 +233,7 @@ class PackCardState extends State<PackCard>
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  '\$${widget.pack.unitPrice.toStringAsFixed(3)}',
+                  '\$${widget.pack.unitPrice.toStringAsFixed(1)}',
                   style: GoogleFonts.roboto(
                     fontSize: 28,
                     color: Colors.black,

@@ -34,7 +34,6 @@ class _HomePageState extends State<HomePage> {
     try {
       if (user != null) {
         ref.setUserIdentifier(user.uid);
-        ref.setCustomKey('userEmail', user.email!);
       }
     } catch (err, stack) {
       errorHandler(
