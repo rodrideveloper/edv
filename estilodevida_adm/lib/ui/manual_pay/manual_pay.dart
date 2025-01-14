@@ -107,25 +107,56 @@ class _ManualPayAdminScreenState extends State<ManualPayAdminScreen> {
                         ),
                       ],
                     ),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        // Ejecuta la función allowNow
-                        allowNow(item);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                    trailing: Column(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Ejecuta la función allowNow
+                              allowNow(item);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                            ),
+                            child: const Text(
+                              'Acreditar',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 8),
-                      ),
-                      child: const Text(
-                        'Acreditar',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                        const SizedBox(
+                          height: 10,
                         ),
-                      ),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await _manualPayService.deleteManualPay(item.id);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: purple,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                            ),
+                            child: const Text(
+                              'Eliminar',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
