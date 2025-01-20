@@ -1,6 +1,7 @@
 import 'package:estilodevida/error_handler.dart';
 import 'package:estilodevida/services/http_service/http_service.dart';
 import 'package:estilodevida/ui/constants.dart';
+import 'package:estilodevida/ui/lessons_avalibles.dart';
 import 'package:estilodevida/ui/register_lesson/qr_scanner.dart';
 import 'package:estilodevida/ui/widgets/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RegisterLessons extends StatefulWidget {
-  const RegisterLessons({super.key});
+  const RegisterLessons({super.key, required this.lessson});
+
+  final LessonsAvaliblesEnum lessson;
 
   @override
   State<RegisterLessons> createState() => _RegisterLessonsState();
@@ -69,6 +72,7 @@ class _RegisterLessonsState extends State<RegisterLessons> {
         'userId': user.uid,
         'userName': user.displayName,
         'userPhoto': user.photoURL,
+        'lesson': widget.lessson,
       });
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();

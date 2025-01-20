@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => GoRouter.of(context).push('/register'),
+        onPressed: () => GoRouter.of(context).push('/selected'),
         backgroundColor: purple,
         elevation: 8,
         child: const Icon(
