@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget {
         const FooterImageBackground(),
         LessonRemains(user: user),
         Padding(
-          padding: const EdgeInsets.only(top: 120),
+          padding: const EdgeInsets.only(top: 100),
           child: Align(
             alignment: Alignment.topCenter,
             child: Text(

@@ -1,8 +1,8 @@
 import 'package:estilodevida/error_handler.dart';
+import 'package:estilodevida/models/events/event_model.dart';
 import 'package:estilodevida/services/http_service/http_service.dart';
-import 'package:estilodevida/services/user_pack_service.dart/user_pack_service.dart';
+// Aquí podrías reemplazarlo con un servicio de eventos similar a tu "UserPackService"
 import 'package:estilodevida/ui/constants.dart';
-import 'package:estilodevida/ui/packs/packs.dart';
 import 'package:estilodevida/ui/widgets/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -14,21 +14,24 @@ import 'package:provider/provider.dart';
 
 enum Method { efectivo, transferencia }
 
-class BuyButtonPack extends StatefulWidget {
-  const BuyButtonPack({
+class BuyButtonEvent extends StatefulWidget {
+  const BuyButtonEvent({
     super.key,
-    required this.pack,
+    required this.event,
     required this.uid,
   });
 
-  final PackOption pack;
+  /// El evento que se va a comprar
+  final EventModel event;
+
+  /// ID del usuario (Firebase)
   final String uid;
 
   @override
-  State<BuyButtonPack> createState() => _BuyButtonPackState();
+  State<BuyButtonEvent> createState() => _BuyButtonEventState();
 }
 
-class _BuyButtonPackState extends State<BuyButtonPack> {
+class _BuyButtonEventState extends State<BuyButtonEvent> {
   bool loading = false;
 
   Future<void> _showPaymentDialog(BuildContext context) async {
@@ -124,16 +127,20 @@ class _BuyButtonPackState extends State<BuyButtonPack> {
     );
   }
 
-  Future<void> manualPay(
-    Method method,
-  ) async {
-    final user = context.read<User>();
+  /// Ejemplo de registro de pago manual:
+  Future<void> manualPay(Method method) async {
+    final user = context.read<User?>();
+    if (user == null) return;
+
     try {
-      await UserPackService().addManualPay(
-        widget.pack,
-        user,
-        method,
-      );
+      // Aquí podrías guardar la compra del evento en tu servicio de eventos
+      // await UserEventService().addManualPay(
+      //   event: widget.event,
+      //   user: user,
+      //   method: method,
+      // );
+
+      // Navegar a alguna pantalla de pendientes o confirmación
       GoRouter.of(context).push('/pending');
     } catch (err, stack) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -147,20 +154,22 @@ class _BuyButtonPackState extends State<BuyButtonPack> {
         ),
       );
 
-      errorHandler(err: err, stack: stack, reason: 'Pago manual', information: [
-        {
-          'user': user.uid,
-          'pack': widget.pack.id,
-        }
-      ]);
+      errorHandler(
+        err: err,
+        stack: stack,
+        reason: 'Pago manual evento',
+        information: [
+          {
+            'user': user.uid,
+            'eventId': widget.event.id,
+          }
+        ],
+      );
     }
   }
 
-  Future<void> _buyPack(
-    BuildContext context,
-    PackOption pack,
-    String uid,
-  ) async {
+  /// Ejemplo de "comprar" un evento abriendo un diálogo para elegir el método de pago
+  Future<void> _buyEvent(BuildContext context) async {
     try {
       await _showPaymentDialog(context);
     } catch (err, stack) {
@@ -168,31 +177,31 @@ class _BuyButtonPackState extends State<BuyButtonPack> {
         err,
         stack,
         fatal: true,
-        reason: 'Error en _buyPack',
+        reason: 'Error en _buyEvent',
       );
     }
   }
 
-  Future<void> _launchURL(
-    BuildContext context,
-    PackOption pack,
-  ) async {
+  /// Ejemplo de abrir un link de pago externo (MercadoPago, etc.)
+  /// En caso de que quieras usar esta opción para pago online.
+  Future<void> _launchURL(BuildContext context) async {
     try {
       final user = context.read<User?>();
       final theme = Theme.of(context);
+      if (user == null) return;
 
-      final result =
-          await HttpService(baseUrl: baseUrl).post(createPreferenceEndPoint, {
-        'itemId': pack.id,
-        'unitPrice': pack.unitPrice,
-        'title': pack.title,
-        'packId': pack.id,
-        'lessons': pack.lessons,
-        'dueDays': pack.dueDays,
-        'userId': user?.uid,
-      });
+      // Supongamos que en tu backend sólo necesitas (id, title, price) para generar el link
+      final result = await HttpService(baseUrl: baseUrl).post(
+        createPreferenceEndPoint,
+        {
+          'eventId': widget.event.id,
+          'title': widget.event.title,
+          'price': widget.event.price,
+          'userId': user.uid,
+        },
+      );
 
-      final url = result['init_point'];
+      final url = result['init_point'] as String;
 
       await launchUrl(
         Uri.parse(url),
@@ -218,7 +227,7 @@ class _BuyButtonPackState extends State<BuyButtonPack> {
       errorHandler(
         err: err,
         stack: stack,
-        reason: 'Error en Buy Button',
+        reason: 'Error lanzando URL de pago',
         information: [],
       );
       if (mounted) {
@@ -239,7 +248,7 @@ class _BuyButtonPackState extends State<BuyButtonPack> {
           ? null
           : () async {
               setState(() => loading = true);
-              await _buyPack(context, widget.pack, widget.uid);
+              await _buyEvent(context);
               setState(() => loading = false);
             },
       style: ElevatedButton.styleFrom(
@@ -251,8 +260,8 @@ class _BuyButtonPackState extends State<BuyButtonPack> {
       ),
       child: !loading
           ? Text(
-              textAlign: TextAlign.center,
               'Comprar ahora',
+              textAlign: TextAlign.center,
               style: GoogleFonts.roboto(
                 color: Colors.white,
                 fontSize: 20,

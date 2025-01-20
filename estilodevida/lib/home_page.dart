@@ -18,8 +18,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-
   @override
   void initState() {
     super.initState();
@@ -86,12 +84,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = context.watch<User?>();
@@ -135,22 +127,22 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: InkWell(
                   onTap: () => GoRouter.of(context).push('/buypack'),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
                         child: Icon(
                           Icons.shopping_cart,
-                          color: _selectedIndex == 0 ? purple : Colors.grey,
+                          color: purple,
                           size: 24,
                         ),
                       ),
-                      const SizedBox(height: 5),
+                      SizedBox(height: 5),
                       Expanded(
                         child: Text(
                           'Comprar Pack',
                           style: TextStyle(
-                            color: _selectedIndex == 0 ? purple : Colors.grey,
+                            color: purple,
                             fontSize: 12,
                           ),
                         ),
@@ -162,23 +154,23 @@ class _HomePageState extends State<HomePage> {
               Expanded(child: Container()),
               Expanded(
                 child: InkWell(
-                  onTap: () => _onItemTapped(2),
-                  child: Column(
+                  onTap: () => GoRouter.of(context).push('/events'),
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
                         child: Icon(
                           Icons.event,
-                          color: _selectedIndex == 2 ? purple : Colors.grey,
+                          color: purple,
                           size: 24,
                         ),
                       ),
-                      const SizedBox(height: 5),
+                      SizedBox(height: 5),
                       Expanded(
                         child: Text(
                           'Eventos',
                           style: TextStyle(
-                            color: _selectedIndex == 2 ? purple : Colors.grey,
+                            color: purple,
                             fontSize: 12,
                           ),
                         ),

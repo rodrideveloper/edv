@@ -42,7 +42,7 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.calendar_today, color: Colors.white),
+              leading: const Icon(Icons.qr_code, color: Colors.white),
               title: Text('Registrar Clase',
                   style: theme.textTheme.bodyMedium
                       ?.copyWith(color: Colors.white)),
