@@ -66,6 +66,13 @@ class CustomDrawer extends StatelessWidget {
               ),
               onTap: () => GoRouter.of(context).push('/userpacks'),
             ),
+            ListTile(
+              leading: const Icon(Icons.calendar_today, color: Colors.white),
+              title: Text('Eventos',
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(color: Colors.white)),
+              onTap: () => GoRouter.of(context).push('/events'),
+            ),
             const Spacer(),
             ListTile(
               title: Text(AppInfo().getAppVersion(),

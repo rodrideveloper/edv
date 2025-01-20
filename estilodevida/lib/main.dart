@@ -5,6 +5,7 @@ import 'package:estilodevida/services/app_info/app_info.dart';
 import 'package:estilodevida/services/auth_service/auth_service.dart';
 import 'package:estilodevida/services/shared_preference/user_preferences.dart';
 import 'package:estilodevida/ui/constants.dart';
+import 'package:estilodevida/ui/events/events.dart';
 import 'package:estilodevida/ui/login/login_page.dart';
 import 'package:estilodevida/ui/packs/packs.dart';
 import 'package:estilodevida/ui/packs/payment_error.dart';
@@ -98,6 +99,10 @@ GoRouter createRouter(User? auth) {
       GoRoute(
         path: '/register',
         builder: (_, __) => const RegisterLessons(),
+      ),
+      GoRoute(
+        path: '/events',
+        builder: (_, __) => const Events(),
       ),
       GoRoute(
         path: '/success',
