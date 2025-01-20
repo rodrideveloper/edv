@@ -35,4 +35,18 @@ class RegisterLessonService {
       });
     }).toList();
   }
+
+  Future<void> deleteRegisterLesson(
+    String registerLessonId,
+  ) async {
+    try {
+      await _firestore
+          .collection('register_lessons')
+          .doc(registerLessonId)
+          .delete();
+    } catch (e) {
+      throw Exception(
+          'Error al eliminar manual_pay con id $registerLessonId: $e');
+    }
+  }
 }

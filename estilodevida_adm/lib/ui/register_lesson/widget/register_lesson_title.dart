@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:estilodevida_adm/model/register_lesson/register_lesson_model.dart';
+import 'package:estilodevida_adm/service/register_lesson_service.dart';
+import 'package:estilodevida_adm/ui/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -7,11 +9,13 @@ class RegisterLessonTile extends StatelessWidget {
   final RegisterLessonModel lesson;
   final int index;
 
-  const RegisterLessonTile({
+  RegisterLessonTile({
     super.key,
     required this.lesson,
     required this.index,
   });
+
+  final _registerService = RegisterLessonService();
 
   @override
   Widget build(BuildContext context) {
@@ -65,20 +69,36 @@ class RegisterLessonTile extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        subtitle: Text(
-          'Fecha: ${dateFormatter.format(lesson.date)}',
-          style: TextStyle(
-            color: index.isEven ? Colors.black54 : Colors.grey[600],
-          ),
+        subtitle: Row(
+          children: [
+            Text(
+              dateFormatter.format(lesson.date),
+            ),
+            const Text(' - '),
+            Text(
+              timeFormatter.format(lesson.date),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
-        trailing: Text(
-          'Hora\n${timeFormatter.format(lesson.date)}',
-          style: TextStyle(
-            color: index.isEven ? Colors.black : Colors.grey[800],
-            fontWeight: FontWeight.bold,
-            fontSize: 14.0,
+        trailing: ElevatedButton(
+          onPressed: () async {
+            await _registerService.deleteRegisterLesson(lesson.id);
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: purple,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           ),
-          textAlign: TextAlign.center,
+          child: const Text(
+            'Eliminar',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
     );

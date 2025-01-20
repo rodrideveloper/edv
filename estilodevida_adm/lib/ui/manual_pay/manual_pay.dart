@@ -1,4 +1,6 @@
 // file: lib/ui/manual_pay_admin_screen.dart
+// ignore_for_file: prefer_const_constructors
+
 import 'package:estilodevida_adm/model/manual_pay/manual_pay.dart';
 import 'package:estilodevida_adm/model/pack/pack_model.dart';
 import 'package:estilodevida_adm/service/manual_pay_service.dart';
@@ -107,35 +109,30 @@ class _ManualPayAdminScreenState extends State<ManualPayAdminScreen> {
                         ),
                       ],
                     ),
-                    trailing: Column(
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Ejecuta la función allowNow
-                              allowNow(item);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Ejecuta la función allowNow
+                            allowNow(item);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Text(
-                              'Acreditar',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                          ),
+                          child: Icon(
+                            Icons.add_circle,
+                            color: Colors.white,
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          width: 10,
                         ),
-                        Expanded(
-                          child: ElevatedButton(
+                        ElevatedButton(
                             onPressed: () async {
                               await _manualPayService.deleteManualPay(item.id);
                             },
@@ -147,15 +144,10 @@ class _ManualPayAdminScreenState extends State<ManualPayAdminScreen> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 8),
                             ),
-                            child: const Text(
-                              'Eliminar',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            )),
                       ],
                     ),
                   ),
