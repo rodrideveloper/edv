@@ -42,11 +42,11 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.calendar_today, color: Colors.white),
+              leading: const Icon(Icons.qr_code, color: Colors.white),
               title: Text('Registrar Clase',
                   style: theme.textTheme.bodyMedium
                       ?.copyWith(color: Colors.white)),
-              onTap: () => GoRouter.of(context).push('/register'),
+              onTap: () => GoRouter.of(context).push('/selected'),
             ),
             ListTile(
               leading: const Icon(Icons.shopping_cart, color: Colors.white),
@@ -65,6 +65,20 @@ class CustomDrawer extends StatelessWidget {
                     theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
               ),
               onTap: () => GoRouter.of(context).push('/userpacks'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.calendar_today, color: Colors.white),
+              title: Text('Eventos',
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(color: Colors.white)),
+              onTap: () => GoRouter.of(context).push('/events'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.airplane_ticket, color: Colors.white),
+              title: Text('Mis entradas',
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(color: Colors.white)),
+              onTap: () => GoRouter.of(context).push('/my_events'),
             ),
             const Spacer(),
             ListTile(

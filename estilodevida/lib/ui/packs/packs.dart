@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:estilodevida/ui/constants.dart';
 import 'package:estilodevida/ui/packs/widgets/buy_button.dart';
 import 'package:estilodevida/ui/widgets/common_appbar.dart';
 import 'package:estilodevida/ui/widgets/common_container.dart';
@@ -119,7 +120,6 @@ class _PackSelectionScreenState extends State<PackSelectionScreen> {
                     },
                   ),
                 ),
-                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -193,9 +193,15 @@ class PackCardState extends State<PackCard>
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 500),
           margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-          padding: const EdgeInsets.all(20.0),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.9),
+            gradient: LinearGradient(
+              colors: [
+                Colors.white.withOpacity(0.9),
+                const Color(0xFFD4E2FF).withOpacity(0.7), // un azul claro
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
             borderRadius: BorderRadius.circular(30.0),
             boxShadow: [
               BoxShadow(
@@ -205,52 +211,83 @@ class PackCardState extends State<PackCard>
               ),
             ],
           ),
-          child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: 200,
-                  child: Image.asset(
-                    'assets/images/logo_edv.png',
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        SizedBox(
+                          width: 120,
+                          child: Image.asset(
+                            'assets/images/logo_edv.png',
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          widget.pack.title,
+                          style: GoogleFonts.roboto(
+                            fontSize: 32,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w600,
+                            shadows: [
+                              Shadow(
+                                blurRadius: 2.0,
+                                color: Colors.black.withOpacity(0.2),
+                                offset: const Offset(0, 1),
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 20),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: blue.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            '\$${widget.pack.unitPrice.toStringAsFixed(1)}',
+                            style: GoogleFonts.roboto(
+                              fontSize: 24,
+                              color: Colors.purple.shade800,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.calendar_month,
+                              color: Colors.grey.shade700,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              '${widget.pack.dueDays} días disponibles',
+                              style: GoogleFonts.roboto(
+                                fontSize: 18,
+                                color: Colors.grey[800],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                Text(
-                  widget.pack.title,
-                  style: GoogleFonts.roboto(
-                    fontSize: 35,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 2.0,
-                        color: Colors.black.withOpacity(0.3),
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
-                  ),
+                BuyButtonPack(
+                  pack: widget.pack,
+                  uid: widget.uid,
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  '\$${widget.pack.unitPrice.toStringAsFixed(3)}',
-                  style: GoogleFonts.roboto(
-                    fontSize: 28,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  '${widget.pack.dueDays} días disponibles',
-                  style: GoogleFonts.roboto(
-                    fontSize: 20,
-                    color: Colors.grey[700],
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 50),
-                BuyButton(pack: widget.pack, uid: widget.uid),
               ],
             ),
           ),

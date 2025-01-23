@@ -5,12 +5,17 @@ import 'package:estilodevida/services/app_info/app_info.dart';
 import 'package:estilodevida/services/auth_service/auth_service.dart';
 import 'package:estilodevida/services/shared_preference/user_preferences.dart';
 import 'package:estilodevida/ui/constants.dart';
+import 'package:estilodevida/ui/events/events.dart';
+import 'package:estilodevida/ui/events/widgets/pending_event_payment.dart';
+import 'package:estilodevida/ui/lessons_avalibles.dart';
 import 'package:estilodevida/ui/login/login_page.dart';
+import 'package:estilodevida/ui/my_events/my_events.dart';
 import 'package:estilodevida/ui/packs/packs.dart';
 import 'package:estilodevida/ui/packs/payment_error.dart';
 import 'package:estilodevida/ui/packs/payment_pending.dart';
 import 'package:estilodevida/ui/packs/payment_success.dart';
 import 'package:estilodevida/ui/register_lesson/register_lesson.dart';
+import 'package:estilodevida/ui/register_lesson/selected_lesson.dart';
 import 'package:estilodevida/ui/user_pack/user_packs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -97,7 +102,14 @@ GoRouter createRouter(User? auth) {
       ),
       GoRoute(
         path: '/register',
-        builder: (_, __) => const RegisterLessons(),
+        builder: (context, state) {
+          final selectedLesson = state.extra as LessonsAvaliblesEnum?;
+          return RegisterLessons(lessson: selectedLesson!);
+        },
+      ),
+      GoRoute(
+        path: '/events',
+        builder: (_, __) => const Events(),
       ),
       GoRoute(
         path: '/success',
@@ -110,6 +122,18 @@ GoRouter createRouter(User? auth) {
       GoRoute(
         path: '/pending',
         builder: (_, __) => const PaymentPendingScreen(),
+      ),
+      GoRoute(
+        path: '/selected',
+        builder: (_, __) => const SelectedLessons(),
+      ),
+      GoRoute(
+        path: '/pending_event',
+        builder: (_, __) => const EventPaymentPendingScreen(),
+      ),
+      GoRoute(
+        path: '/my_events',
+        builder: (_, __) => const MyEvents(),
       ),
     ],
     redirect: (context, state) {

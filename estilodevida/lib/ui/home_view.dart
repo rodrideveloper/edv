@@ -1,4 +1,3 @@
-import 'package:estilodevida/ui/widgets/background_waves.dart';
 import 'package:estilodevida/ui/widgets/footer_image_bk.dart';
 import 'package:estilodevida/ui/widgets/lessons_remains.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,11 +17,10 @@ class HomeView extends StatelessWidget {
     String name = user.displayName?.split(' ')[0] ?? '';
     return Stack(
       children: [
-        DancingWavesBackground(),
         const FooterImageBackground(),
         LessonRemains(user: user),
         Padding(
-          padding: const EdgeInsets.only(top: 120),
+          padding: const EdgeInsets.only(top: 100),
           child: Align(
             alignment: Alignment.topCenter,
             child: Text(
@@ -31,7 +29,6 @@ class HomeView extends StatelessWidget {
             ),
           ),
         ),
-        // ProfileImage(user: user),
       ],
     );
   }

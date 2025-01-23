@@ -114,7 +114,7 @@ class _PackCardState extends State<PackCard>
                 ),
               ),
               const SizedBox(height: 30),
-              BuyButton(pack: widget.pack, uid: widget.uid),
+              BuyButtonPack(pack: widget.pack, uid: widget.uid),
             ],
           ),
         ),

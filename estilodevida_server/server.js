@@ -159,6 +159,7 @@ app.post('/registerLesson', async (req, res) => {
         const userId = req.body.userId;
         const userName = req.body.userName;
         const userPhoto = req.body.userPhoto;
+        const lesson = req.body.lesson;
 
         if (!userId) {
             return res.status(400).json({ message: 'userId es requerido.' });
@@ -236,6 +237,7 @@ app.post('/registerLesson', async (req, res) => {
                 userName: userName,
                 userPhoto: userPhoto,
                 lessons: lessons,
+                register: lesson,
                 date: admin.firestore.FieldValue.serverTimestamp(),
             });
         });

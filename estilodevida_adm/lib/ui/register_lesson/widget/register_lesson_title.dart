@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:estilodevida_adm/model/register_lesson/register_lesson_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -58,28 +59,68 @@ class RegisterLessonTile extends StatelessWidget {
                   ),
           ),
         ),
-        title: Text(
-          lesson.userName ?? 'N/N',
-          style: TextStyle(
-            color: index.isEven ? Colors.black : Colors.grey[800],
-            fontWeight: FontWeight.bold,
-          ),
+        title: Row(
+          children: [
+            Text(
+              lesson.userName ?? 'N/N',
+              style: TextStyle(
+                color: index.isEven ? Colors.black : Colors.grey[800],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            lesson.register != null
+                ? Row(
+                    children: [
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const Text('-'),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        lesson.register!,
+                        style: TextStyle(
+                          color: index.isEven ? Colors.black : Colors.grey[800],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
+          ],
         ),
-        subtitle: Text(
-          'Fecha: ${dateFormatter.format(lesson.date)}',
-          style: TextStyle(
-            color: index.isEven ? Colors.black54 : Colors.grey[600],
-          ),
+        subtitle: Row(
+          children: [
+            Text(
+              dateFormatter.format(lesson.date),
+            ),
+            const Text(' - '),
+            Text(
+              timeFormatter.format(lesson.date),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
-        trailing: Text(
-          'Hora\n${timeFormatter.format(lesson.date)}',
-          style: TextStyle(
-            color: index.isEven ? Colors.black : Colors.grey[800],
-            fontWeight: FontWeight.bold,
-            fontSize: 14.0,
-          ),
-          textAlign: TextAlign.center,
-        ),
+        // trailing: ElevatedButton(
+        //   onPressed: () async {
+        //     await _registerService.deleteRegisterLesson(lesson.id);
+        //   },
+        //   style: ElevatedButton.styleFrom(
+        //     backgroundColor: purple,
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(8),
+        //     ),
+        //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        //   ),
+        //   child: const Text(
+        //     'Eliminar',
+        //     style: TextStyle(
+        //       color: Colors.white,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }

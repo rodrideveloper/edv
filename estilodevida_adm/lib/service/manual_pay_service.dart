@@ -67,4 +67,12 @@ class ManualPayService {
       throw Exception('Error en la transacción de allowNow: $e');
     }
   }
+
+  Future<void> deleteManualPay(String manualPayId) async {
+    try {
+      await _db.collection('manual_pay').doc(manualPayId).delete();
+    } catch (e) {
+      throw Exception('Error al eliminar manual_pay con id $manualPayId: $e');
+    }
+  }
 }
