@@ -12,9 +12,11 @@ class RegisterLessonModel {
   final DateTime date;
   final String? userPhoto;
   final int? lessons;
+  final String? register;
 
   RegisterLessonModel(
     this.lessons, {
+    this.register,
     required this.id,
     required this.userName,
     required this.date,

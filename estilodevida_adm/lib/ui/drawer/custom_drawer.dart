@@ -1,5 +1,8 @@
+import 'package:estilodevida_adm/ui/abm_events/events.dart';
 import 'package:estilodevida_adm/ui/abm_pack/abm_pack.dart';
+import 'package:estilodevida_adm/ui/events_manual_pay/events_manual_pay.dart';
 import 'package:estilodevida_adm/ui/manual_pay/manual_pay.dart';
+import 'package:estilodevida_adm/ui/tickets/user_tickets.dart';
 import 'package:estilodevida_adm/ui/user_selection/user_selection.dart';
 import 'package:estilodevida_adm/ui/utils.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +76,51 @@ class CustomDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const ManualPayAdminScreen(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.event,
+              color: blue,
+            ),
+            title: const Text('Eventos'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EventAdminScreen(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.event_available,
+              color: blue,
+            ),
+            title: const Text('Eventos Pagos Manuales'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EventPayAdminScreen(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.airplane_ticket,
+              color: blue,
+            ),
+            title: const Text('Entradas'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EventUsersScreen(),
                 ),
               );
             },
