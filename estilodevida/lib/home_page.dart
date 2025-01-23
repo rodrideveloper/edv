@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.check_circle, color: Colors.white),
+              const Icon(Icons.error, color: Colors.white),
               const SizedBox(width: 5),
               Text(text, style: const TextStyle(color: Colors.white)),
             ],

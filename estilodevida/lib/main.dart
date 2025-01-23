@@ -6,8 +6,10 @@ import 'package:estilodevida/services/auth_service/auth_service.dart';
 import 'package:estilodevida/services/shared_preference/user_preferences.dart';
 import 'package:estilodevida/ui/constants.dart';
 import 'package:estilodevida/ui/events/events.dart';
+import 'package:estilodevida/ui/events/widgets/pending_event_payment.dart';
 import 'package:estilodevida/ui/lessons_avalibles.dart';
 import 'package:estilodevida/ui/login/login_page.dart';
+import 'package:estilodevida/ui/my_events/my_events.dart';
 import 'package:estilodevida/ui/packs/packs.dart';
 import 'package:estilodevida/ui/packs/payment_error.dart';
 import 'package:estilodevida/ui/packs/payment_pending.dart';
@@ -101,7 +103,6 @@ GoRouter createRouter(User? auth) {
       GoRoute(
         path: '/register',
         builder: (context, state) {
-          // Se obtiene el valor extra, que debe ser de tipo LessonsAvaliblesEnum
           final selectedLesson = state.extra as LessonsAvaliblesEnum?;
           return RegisterLessons(lessson: selectedLesson!);
         },
@@ -125,6 +126,14 @@ GoRouter createRouter(User? auth) {
       GoRoute(
         path: '/selected',
         builder: (_, __) => const SelectedLessons(),
+      ),
+      GoRoute(
+        path: '/pending_event',
+        builder: (_, __) => const EventPaymentPendingScreen(),
+      ),
+      GoRoute(
+        path: '/my_events',
+        builder: (_, __) => const MyEvents(),
       ),
     ],
     redirect: (context, state) {

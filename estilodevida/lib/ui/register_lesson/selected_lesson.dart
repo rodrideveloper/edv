@@ -102,7 +102,7 @@ class _SelectedLessonsState extends State<SelectedLessons> {
                     }
                     Navigator.of(context).pop();
                     GoRouter.of(context)
-                        .push('/register', extra: selectedLesson);
+                        .pushReplacement('/register', extra: selectedLesson);
                   },
                 ),
               ],

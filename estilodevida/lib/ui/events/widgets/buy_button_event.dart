@@ -1,8 +1,9 @@
 import 'package:estilodevida/error_handler.dart';
 import 'package:estilodevida/models/events/event_model.dart';
+import 'package:estilodevida/services/event_service/event_service.dart';
 import 'package:estilodevida/services/http_service/http_service.dart';
-// Aquí podrías reemplazarlo con un servicio de eventos similar a tu "UserPackService"
 import 'package:estilodevida/ui/constants.dart';
+import 'package:estilodevida/ui/packs/widgets/buy_button.dart';
 import 'package:estilodevida/ui/widgets/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -12,8 +13,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-enum Method { efectivo, transferencia }
-
 class BuyButtonEvent extends StatefulWidget {
   const BuyButtonEvent({
     super.key,
@@ -21,10 +20,8 @@ class BuyButtonEvent extends StatefulWidget {
     required this.uid,
   });
 
-  /// El evento que se va a comprar
   final EventModel event;
 
-  /// ID del usuario (Firebase)
   final String uid;
 
   @override
@@ -127,21 +124,20 @@ class _BuyButtonEventState extends State<BuyButtonEvent> {
     );
   }
 
-  /// Ejemplo de registro de pago manual:
-  Future<void> manualPay(Method method) async {
+  Future<void> manualPay(
+    Method method,
+  ) async {
     final user = context.read<User?>();
     if (user == null) return;
 
     try {
-      // Aquí podrías guardar la compra del evento en tu servicio de eventos
-      // await UserEventService().addManualPay(
-      //   event: widget.event,
-      //   user: user,
-      //   method: method,
-      // );
+      await EventService().addManualPay(
+        event: widget.event,
+        user: user,
+        method: method,
+      );
 
-      // Navegar a alguna pantalla de pendientes o confirmación
-      GoRouter.of(context).push('/pending');
+      GoRouter.of(context).push('/pending_event');
     } catch (err, stack) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -168,7 +164,6 @@ class _BuyButtonEventState extends State<BuyButtonEvent> {
     }
   }
 
-  /// Ejemplo de "comprar" un evento abriendo un diálogo para elegir el método de pago
   Future<void> _buyEvent(BuildContext context) async {
     try {
       await _showPaymentDialog(context);
@@ -182,8 +177,6 @@ class _BuyButtonEventState extends State<BuyButtonEvent> {
     }
   }
 
-  /// Ejemplo de abrir un link de pago externo (MercadoPago, etc.)
-  /// En caso de que quieras usar esta opción para pago online.
   Future<void> _launchURL(BuildContext context) async {
     try {
       final user = context.read<User?>();

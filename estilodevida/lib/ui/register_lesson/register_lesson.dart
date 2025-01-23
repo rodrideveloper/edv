@@ -6,6 +6,7 @@ import 'package:estilodevida/ui/register_lesson/qr_scanner.dart';
 import 'package:estilodevida/ui/widgets/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class RegisterLessons extends StatefulWidget {
@@ -60,7 +61,7 @@ class _RegisterLessonsState extends State<RegisterLessons> {
           duration: Duration(seconds: 3),
         ),
       );
-      Navigator.pop(context);
+      GoRouter.of(context).pop();
     }
   }
 
@@ -72,7 +73,7 @@ class _RegisterLessonsState extends State<RegisterLessons> {
         'userId': user.uid,
         'userName': user.displayName,
         'userPhoto': user.photoURL,
-        'lesson': widget.lessson,
+        'lesson': widget.lessson.name,
       });
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -99,7 +100,7 @@ class _RegisterLessonsState extends State<RegisterLessons> {
       );
 
       if (mounted) {
-        Navigator.of(context).pop();
+        GoRouter.of(context).pop();
       }
     } catch (err, stack) {
       errorHandler(
