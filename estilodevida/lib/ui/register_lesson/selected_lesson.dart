@@ -90,7 +90,7 @@ class _SelectedLessonsState extends State<SelectedLessons> {
                     ),
                   ),
                   label: Text(
-                    'Continar',
+                    'Continuar',
                     style: GoogleFonts.roboto(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
