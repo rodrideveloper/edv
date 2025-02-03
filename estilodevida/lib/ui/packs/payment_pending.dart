@@ -1,4 +1,5 @@
 import 'package:estilodevida/ui/user_pack/user_pack_card.dart';
+import 'package:estilodevida/ui/widgets/alias_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -68,6 +69,9 @@ class PaymentPendingScreen extends StatelessWidget {
                           ),
                           textAlign: TextAlign.center,
                         ),
+                        const AliasCard(
+                            alias: 'Estilodevida.ok',
+                            phoneNumber: '223-5414360')
                       ],
                     ),
                     const SizedBox(height: 40),

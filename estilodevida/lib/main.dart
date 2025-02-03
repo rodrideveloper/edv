@@ -14,6 +14,7 @@ import 'package:estilodevida/ui/packs/packs.dart';
 import 'package:estilodevida/ui/packs/payment_error.dart';
 import 'package:estilodevida/ui/packs/payment_pending.dart';
 import 'package:estilodevida/ui/packs/payment_success.dart';
+import 'package:estilodevida/ui/register_lesson/animation.dart';
 import 'package:estilodevida/ui/register_lesson/register_lesson.dart';
 import 'package:estilodevida/ui/register_lesson/selected_lesson.dart';
 import 'package:estilodevida/ui/user_pack/user_packs.dart';
@@ -105,6 +106,25 @@ GoRouter createRouter(User? auth) {
         builder: (context, state) {
           final selectedLesson = state.extra as LessonsAvaliblesEnum?;
           return RegisterLessons(lessson: selectedLesson!);
+        },
+      ),
+      GoRoute(
+        path: '/check-animation',
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: const CheckAnimationScreen(), // Tu pantalla con la animación
+            opaque: false, // Importante: permite ver “debajo”
+            barrierColor:
+                Colors.black54, // Fondo semitransparente (similar a un modal)
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+          );
         },
       ),
       GoRoute(

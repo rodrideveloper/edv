@@ -3,12 +3,10 @@ import 'package:estilodevida/ui/common_button.dart';
 import 'package:estilodevida/ui/constants.dart';
 import 'package:estilodevida/ui/widgets/common_appbar.dart';
 import 'package:estilodevida/ui/widgets/qr_scanner_error.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 
 class QrScanner extends StatefulWidget {
   const QrScanner({
@@ -52,11 +50,6 @@ class _QrScannerState extends State<QrScanner> with WidgetsBindingObserver {
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     requestCameraPermission();
-
-    final user = context.read<User?>();
-    if (user == null) {
-      return;
-    }
 
     super.initState();
   }
