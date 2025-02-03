@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> setUserToCrashlytics() async {
-    final user = context.watch<User?>();
+    final user = context.read<User?>();
     final ref = FirebaseCrashlytics.instance;
 
     try {

@@ -113,10 +113,9 @@ GoRouter createRouter(User? auth) {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             key: state.pageKey,
-            child: const CheckAnimationScreen(), // Tu pantalla con la animación
-            opaque: false, // Importante: permite ver “debajo”
-            barrierColor:
-                Colors.black54, // Fondo semitransparente (similar a un modal)
+            child: const CheckAnimationScreen(),
+            opaque: false,
+            barrierColor: Colors.black54,
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               return FadeTransition(
