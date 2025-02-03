@@ -20,6 +20,7 @@ class RegisterLessons extends StatefulWidget {
 
 class _RegisterLessonsState extends State<RegisterLessons> {
   User? user;
+
   @override
   void didChangeDependencies() {
     user = context.watch<User>();
@@ -27,15 +28,6 @@ class _RegisterLessonsState extends State<RegisterLessons> {
   }
 
   void onToken(String token) async {
-    if (user == null) {
-      errorHandler(
-        err: 'Error User Null',
-        stack: StackTrace.current,
-        reason:
-            'Uario null en funcion onToke al querer llamar a registerLesson(User) ',
-        information: [],
-      );
-    }
     if (token == tokenQR) {
       registerLesson(user!);
     } else {
@@ -76,38 +68,19 @@ class _RegisterLessonsState extends State<RegisterLessons> {
         'lesson': widget.lessson.name,
       });
 
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Row(
-            children: [
-              Icon(
-                Icons.check_circle,
-                color: Colors.white,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Gracias por registrar tu clase',
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-          backgroundColor: blue,
-          duration: Duration(seconds: 5),
-        ),
-      );
-
       if (mounted) {
         GoRouter.of(context).pop();
+        GoRouter.of(context).push('/check-animation');
       }
+
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      showMessage();
     } catch (err, stack) {
       errorHandler(
-        err: 'Error al registrar lección',
+        err: err,
         stack: stack,
         reason: '',
-        information: [response],
+        information: [response.toString()],
       );
     }
   }

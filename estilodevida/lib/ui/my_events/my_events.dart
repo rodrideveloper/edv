@@ -45,8 +45,6 @@ class MyEvents extends StatelessWidget {
               itemBuilder: (context, index) {
                 final eventPay = eventPays[index];
 
-                // Aquí podrías diseñar cada "tarjeta" o "ticket".
-                // Más abajo un ejemplo de ticket básico.
                 return _TicketItem(eventPay: eventPay);
               },
             );

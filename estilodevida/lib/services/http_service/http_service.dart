@@ -29,7 +29,7 @@ class HttpService {
     }
   }
 
-  Future<dynamic> post(
+  Future<Map<String, dynamic>> post(
     String endpoint,
     Map<String, dynamic> data,
   ) async {
