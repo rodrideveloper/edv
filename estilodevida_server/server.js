@@ -37,6 +37,7 @@ app.use(express.json());
 app.use('/.well-known', express.static(path.join(__dirname, '.well-known')));
 app.use('/privacypolicy', express.static(path.join(__dirname, 'privacypolicy.html')));
 app.use('/deleteuser', express.static(path.join(__dirname, 'deleteuser.html')));
+app.use('/help', express.static(path.join(__dirname, 'help.html')));
 
 
 app.use(express.static(path.join(__dirname)));

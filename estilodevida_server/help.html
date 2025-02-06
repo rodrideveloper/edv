@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Soporte - Estilo de vida - Academia de Baile</title>
+    <style>
+        /* Estilos generales */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+            overflow: hidden;
+            padding: 1rem 0;
+        }
+
+        /* Navegación */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+
+        /* Secciones */
+        section {
+            padding: 2rem 0;
+            background: #fff;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+        }
+
+        section h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .text-center {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        /* FAQ */
+        .faq-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .faq-item h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .faq-item p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        /* Formulario de contacto */
+        form {
+            max-width: 600px;
+            margin: auto;
+            padding: 1rem;
+        }
+
+        form .form-control {
+            margin-bottom: 1rem;
+        }
+
+        form .form-control label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        form .form-control input,
+        form .form-control textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        form .form-control textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        form button {
+            display: block;
+            width: 100%;
+            padding: 0.7rem;
+            border: none;
+            background: #333;
+            color: #fff;
+            font-size: 1rem;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        form button:hover {
+            background: #555;
+        }
+
+        /* Pie de página */
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Encabezado y navegación -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1>Estilo de vida</h1>
+                    <small>Academia de Baile</small>
+                </div>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#soporte">Soporte</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sección Inicio -->
+    <section id="inicio">
+        <div class="container">
+            <h2>Bienvenido a Estilo de vida - Academia de Baile</h2>
+            <p class="text-center">Esta es la página de soporte donde podrás encontrar información, respuestas a
+                preguntas frecuentes y un medio para contactarnos en caso de dudas o problemas.</p>
+        </div>
+    </section>
+
+    <!-- Sección Soporte -->
+    <section id="soporte">
+        <div class="container">
+            <h2>Soporte y Ayuda</h2>
+            <p class="text-center">Aquí encontrarás guías y tutoriales para sacar el máximo provecho de la aplicación.
+                Si tienes alguna duda, te invitamos a explorar los recursos disponibles o a ponerte en contacto con
+                nosotros.</p>
+            <div class="text-center">
+                <p><strong>Recuerda:</strong> También puedes enviarnos tus consultas a nuestro correo de soporte: <a
+                        href="mailto:rodrigo.desarrollador@gmail.com">rodrigo.desarrollador@gmail.com</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección FAQ -->
+    <section id="faq">
+        <div class="container">
+            <h2>Preguntas Frecuentes (FAQ)</h2>
+
+            <div class="faq-item">
+                <h3>¿Cómo descargo la aplicación?</h3>
+                <p>Puedes descargar la aplicación desde el App Store. Simplemente búscala con el nombre <em>"Estilo de
+                        vida - Academia de Baile"</em> y sigue las instrucciones de descarga e instalación.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>¿La aplicación es compatible con todos los dispositivos?</h3>
+                <p>La aplicación está diseñada para dispositivos iPhone, garantizando una experiencia optimizada para
+                    este tipo de dispositivo.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>¿Dónde puedo encontrar tutoriales para usar la aplicación?</h3>
+                <p>En la sección de Soporte y Ayuda de esta página encontrarás enlaces a guías y tutoriales. Además,
+                    puedes contactarnos para recibir asistencia personalizada.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Contacto -->
+    <section id="contacto">
+        <div class="container">
+            <h2>Contacto</h2>
+            <p class="text-center">Si tienes alguna pregunta, comentario o problema, completa el formulario a
+                continuación y nos pondremos en contacto contigo.</p>
+            <form id="contactForm">
+                <div class="form-control">
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" name="name" required placeholder="Tu nombre">
+                </div>
+                <div class="form-control">
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" required placeholder="tu@correo.com">
+                </div>
+                <div class="form-control">
+                    <label for="message">Mensaje:</label>
+                    <textarea id="message" name="message" required placeholder="Escribe tu mensaje aquí..."></textarea>
+                </div>
+                <button type="submit">Enviar Mensaje</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Estilo de vida - Academia de Baile. Todos los derechos reservados.</p>
+            <p>
+                <a href="#privacidad">Política de Privacidad</a> |
+                <a href="#terminos">Términos de Uso</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript básico para manejo del formulario -->
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Evitar que se recargue la página
+
+            // Aquí puedes implementar la lógica para enviar el formulario (por ejemplo, a través de AJAX)
+            // Por el ejemplo, mostraremos un mensaje simple
+            alert('¡Gracias por contactarnos! Pronto nos pondremos en contacto contigo.');
+            // Opcional: limpiar los campos del formulario
+            this.reset();
+        });
+    </script>
+</body>
+
+</html>
