@@ -188,11 +188,17 @@ class _EventCardState extends State<EventCard>
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(
-                        width: 120,
-                        child: Image.asset(
-                          'assets/images/logo_edv.png',
-                          fit: BoxFit.cover,
+                      Center(
+                        child: CircleAvatar(
+                          radius: 100,
+                          backgroundColor: Colors.white,
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/images/logo_edv.png',
+                              width: 200,
+                              height: 150,
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 20),

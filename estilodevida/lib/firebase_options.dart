@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:496833297972:android:14eb3ba61b5ad5329a9461',
     messagingSenderId: '496833297972',
     projectId: 'estilodevida-8e453',
-    storageBucket: 'estilodevida-8e453.appspot.com',
+    storageBucket: 'estilodevida-8e453.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -62,7 +62,7 @@ class DefaultFirebaseOptions {
     appId: '1:496833297972:ios:7b21cf1d2fdeb3849a9461',
     messagingSenderId: '496833297972',
     projectId: 'estilodevida-8e453',
-    storageBucket: 'estilodevida-8e453.appspot.com',
+    storageBucket: 'estilodevida-8e453.firebasestorage.app',
     androidClientId: '496833297972-ek2jlour4ao9rfkgggvupd2opskun8fg.apps.googleusercontent.com',
     iosClientId: '496833297972-p1vd6593oeqi4s7an2a7v0dr10b1ut3k.apps.googleusercontent.com',
     iosBundleId: 'com.academia.estilodevida.estilodevida',

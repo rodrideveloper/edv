@@ -19,8 +19,7 @@ class _LoginFormState extends State<LoginForm> {
 
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(
-        statusBarColor: purple,
-      ),
+          statusBarColor: purple, systemNavigationBarColor: purple),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Container(
@@ -57,21 +56,14 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                       ),
                       Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.white.withOpacity(0.8),
-                                blurRadius: 60,
-                                spreadRadius: -10,
-                              ),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(24.0),
+                        child: CircleAvatar(
+                          radius: 100,
+                          backgroundColor: Colors.white,
+                          child: ClipOval(
                             child: Image.asset(
                               'assets/images/logo_edv.png',
-                              width: 120,
+                              width: 200,
+                              height: 150,
                             ),
                           ),
                         ),
@@ -108,6 +100,7 @@ class _LoginFormState extends State<LoginForm> {
                         const GoogleLoginButton(),
                         const SizedBox(height: 40),
                         _buildPrivacyPolicyLink(context),
+                        _buildDeleteUserLink(context),
                       ],
                     ),
                   ),
@@ -140,6 +133,27 @@ class _LoginFormState extends State<LoginForm> {
       ),
     );
   }
+}
+
+Widget _buildDeleteUserLink(BuildContext context) {
+  return TextButton(
+    onPressed: () async {
+      const url = 'https://estilodevidamdp.com.ar/deleteuser.html';
+      try {
+        await launchUrl(Uri.parse(url));
+      } catch (e) {
+        debugPrint('Error al abrir URL: $e');
+      }
+    },
+    child: Text(
+      'How delete user?',
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: blue,
+            fontSize: 12,
+            decoration: TextDecoration.underline,
+          ),
+    ),
+  );
 }
 
 class WaveClipper extends CustomClipper<Path> {

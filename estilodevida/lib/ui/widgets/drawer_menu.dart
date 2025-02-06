@@ -25,11 +25,17 @@ class CustomDrawer extends StatelessWidget {
             DrawerHeader(
               child: Column(
                 children: [
-                  Expanded(
-                    child: Image.asset(
-                      color: Colors.white,
-                      'assets/images/logo_edv.png',
-                      height: 80,
+                  Center(
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.white,
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/images/logo_edv.png',
+                          width: 100,
+                          height: 100,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),

@@ -221,10 +221,17 @@ class PackCardState extends State<PackCard>
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        SizedBox(
-                          width: 120,
-                          child: Image.asset(
-                            'assets/images/logo_edv.png',
+                        Center(
+                          child: CircleAvatar(
+                            radius: 100,
+                            backgroundColor: Colors.white,
+                            child: ClipOval(
+                              child: Image.asset(
+                                'assets/images/logo_edv.png',
+                                width: 200,
+                                height: 150,
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 20),
