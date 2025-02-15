@@ -67,7 +67,7 @@ class AliasCard extends StatelessWidget {
               icon: const Icon(Icons.copy, color: Colors.white),
               label: const Text(
                 'Copiar Alias',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(

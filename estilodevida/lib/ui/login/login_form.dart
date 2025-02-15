@@ -1,9 +1,12 @@
+import 'package:estilodevida/ui/login/apple_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 import 'package:estilodevida/ui/login/login_google_button.dart';
 import 'package:estilodevida/ui/constants.dart';
+
+enum LoginType { google, apple }
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -98,6 +101,8 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                         const SizedBox(height: 30),
                         const GoogleLoginButton(),
+                        const SizedBox(height: 10),
+                        const AppleLoginButton(),
                         const SizedBox(height: 40),
                         _buildPrivacyPolicyLink(context),
                         _buildDeleteUserLink(context),

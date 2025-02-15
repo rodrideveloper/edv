@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthService {
   final _auth = FirebaseAuth.instance;
@@ -99,7 +100,41 @@ class AuthService {
         return AuthResult.error("Error al autenticar el usuario");
       }
     } catch (e) {
-      print(e.toString());
+      return AuthResult.error("Error al autenticar el usuario");
+    }
+  }
+
+  Future<AuthResult> signInWithApple() async {
+    try {
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: appleCredential.authorizationCode,
+        idToken: appleCredential.identityToken,
+      );
+
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'email': user.email,
+          'name': user.displayName,
+          'photoURL': user.photoURL,
+          'phone': user.phoneNumber,
+          'createdAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+        return AuthResult.success();
+      } else {
+        return AuthResult.error("Error al autenticar el usuario");
+      }
+    } catch (e) {
       return AuthResult.error("Error al autenticar el usuario");
     }
   }
