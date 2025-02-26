@@ -144,6 +144,7 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                           builder: (context) => UserPackAdminScreen(
                             userId: user.id,
                             userName: user.name,
+                            userPhoto: user.photoURL,
                           ),
                         ),
                       );

@@ -1,5 +1,6 @@
 import 'package:estilodevida_adm/model/pack/pack_model.dart';
 import 'package:estilodevida_adm/model/user_pack/user_pack.dart';
+import 'package:estilodevida_adm/service/http_service.dart';
 import 'package:estilodevida_adm/service/pack_service.dart';
 import 'package:estilodevida_adm/service/user_packs_service.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +12,20 @@ const blue = Color(0xFF3155A1);
 const red = Colors.red;
 const grey = Colors.grey;
 
+const baseUrl = 'https://estilodevidamdp.com.ar';
+const createPreferenceEndPoint = '/create_preference';
+const registerLessonEndPoint = '/registerLesson';
+
 class UserPackAdminScreen extends StatefulWidget {
   final String userId;
-  final String? userName;
+  final String userName;
+  final String userPhoto;
 
   const UserPackAdminScreen({
     super.key,
     required this.userId,
-    this.userName,
+    required this.userName,
+    required this.userPhoto,
   });
 
   @override
@@ -32,7 +39,7 @@ class _UserPackAdminScreenState extends State<UserPackAdminScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Packs de ${widget.userName ?? 'Usuario'}'),
+        title: Text('Packs de ${widget.userName}'),
         backgroundColor: purple, // Color de la barra de navegación
       ),
       body: StreamBuilder<List<UserPackModel>>(
@@ -234,10 +241,16 @@ class _UserPackAdminScreenState extends State<UserPackAdminScreen> {
                             // Menú de opciones
                             PopupMenuButton<String>(
                               onSelected: (value) {
-                                if (value == 'edit') {
-                                  _editUserPack(userPack);
-                                } else if (value == 'delete') {
-                                  _deleteUserPack(userPack.id);
+                                switch (value) {
+                                  case 'edit':
+                                    _editUserPack(userPack);
+                                    break;
+                                  case 'delete':
+                                    _deleteUserPack(userPack.id);
+                                    break;
+                                  case 'register':
+                                    _registerLesson(userPack);
+                                    break;
                                 }
                               },
                               itemBuilder: (context) => [
@@ -245,6 +258,9 @@ class _UserPackAdminScreenState extends State<UserPackAdminScreen> {
                                     value: 'edit', child: Text('Editar')),
                                 const PopupMenuItem(
                                     value: 'delete', child: Text('Borrar')),
+                                const PopupMenuItem(
+                                    value: 'register',
+                                    child: Text('Registrar Clase')),
                               ],
                             ),
                           ],
@@ -671,4 +687,188 @@ class _UserPackAdminScreenState extends State<UserPackAdminScreen> {
       );
     }
   }
+
+  Future<void> _registerLesson(UserPackModel userPack) async {
+    try {
+      String? selectedLesson = await _showSingleSelectionDialog();
+
+      await HttpService(baseUrl: baseUrl).post(registerLessonEndPoint, {
+        'userId': widget.userId,
+        'userName': userPack.userName,
+        'userPhoto': widget.userPhoto,
+        'lesson': selectedLesson,
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Clase registrada correctamente',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Error al registrar la clase',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
+  Future<String?> _showSingleSelectionDialog() async {
+    return showDialog<String>(
+        barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          LessonsAvaliblesEnum? selectedLesson;
+          String? errorMessage;
+
+          return StatefulBuilder(builder: (context, setDialogState) {
+            void validateSelectionAndContinue() {
+              if (selectedLesson == null) {
+                setDialogState(() {
+                  errorMessage = 'Selecciona una clase antes de continuar.';
+                });
+                return;
+              }
+              Navigator.of(context).pop(selectedLesson?.name ?? 'N/N');
+            }
+
+            return AlertDialog(
+              scrollable: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: const BorderSide(color: Colors.white, width: 0),
+              ),
+              title: const Text(
+                'Seleccionar clase',
+                textAlign: TextAlign.center,
+              ),
+              insetPadding:
+                  const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+              actionsAlignment: MainAxisAlignment.spaceEvenly,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // SegmentedButton en vertical y rectangular
+                  SegmentedButton<LessonsAvaliblesEnum>(
+                    // Disposición vertical
+                    direction: Axis.vertical,
+
+                    // Tus opciones
+                    segments: const [
+                      ButtonSegment(
+                        value: LessonsAvaliblesEnum.salsa1,
+                        label: Text('Salsa on 1'),
+                      ),
+                      ButtonSegment(
+                        value: LessonsAvaliblesEnum.salsa2,
+                        label: Text('Salsa on 2'),
+                      ),
+                      ButtonSegment(
+                        value: LessonsAvaliblesEnum.bachata,
+                        label: Text('Bachata'),
+                      ),
+                    ],
+
+                    // Permitir empezar sin selección
+                    // (si prefieres que nunca puedan deseleccionar todo, pon 'false')
+                    emptySelectionAllowed: true,
+
+                    // Configura el estilo para quitar esquinas redondeadas, etc.
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                      ),
+                      padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
+                      ),
+                    ),
+
+                    // Si no hay nada seleccionado => set vacío, de lo contrario set con la selección actual
+                    selected: selectedLesson == null
+                        ? <LessonsAvaliblesEnum>{}
+                        : <LessonsAvaliblesEnum>{selectedLesson!},
+                    onSelectionChanged:
+                        (Set<LessonsAvaliblesEnum> newSelection) {
+                      setDialogState(() {
+                        if (newSelection.isEmpty) {
+                          selectedLesson = null;
+                        } else {
+                          selectedLesson = newSelection.first;
+                        }
+                        // Limpiamos el mensaje de error cuando seleccionan algo
+                        errorMessage = null;
+                      });
+                    },
+                    multiSelectionEnabled: false,
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // Mostrar mensaje de error si hace falta
+                  if (errorMessage != null)
+                    Text(
+                      errorMessage!,
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                ],
+              ),
+              actions: [
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: purple,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  icon: const Icon(Icons.close, color: Colors.white),
+                  label: const Text(
+                    'Cancelar',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: purple,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  icon: const Icon(Icons.check, color: Colors.white),
+                  label: const Text(
+                    'Continuar',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  onPressed: validateSelectionAndContinue,
+                ),
+              ],
+            );
+          });
+        });
+  }
 }
+
+enum LessonsAvaliblesEnum { salsa1, salsa2, bachata }
