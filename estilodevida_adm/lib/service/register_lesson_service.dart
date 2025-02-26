@@ -49,4 +49,34 @@ class RegisterLessonService {
           'Error al eliminar manual_pay con id $registerLessonId: $e');
     }
   }
+
+  Future<void> addRegisterLesson({
+    required int totalLessons,
+    required String register,
+    required String userName,
+    required DateTime date,
+    required String packId,
+    required String? userPhoto,
+  }) async {
+    try {
+      DocumentReference docRef =
+          _firestore.collection('register_lessons').doc();
+
+      RegisterLessonModel registerLessonModel = RegisterLessonModel(
+        totalLessons,
+        register: register,
+        id: docRef.id,
+        date: DateTime.now(),
+        packId: packId,
+        userName: userName,
+        userPhoto: null,
+      );
+
+      final data = registerLessonModel.toJson();
+
+      await docRef.set(data);
+    } catch (e) {
+      throw Exception('Error al agregar el registro: $e');
+    }
+  }
 }
