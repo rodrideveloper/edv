@@ -51,12 +51,12 @@ class PaymentPendingScreen extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
 
                     Column(
                       children: [
                         Text(
-                          'Pronto se te acreditará tu pack.',
+                          'Gracias por tu compra.',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: Colors.black54,
                           ),

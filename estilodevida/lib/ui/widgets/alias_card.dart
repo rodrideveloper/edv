@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../constants.dart';
+
 /// Un widget reutilizable que muestra un alias con opciones para copiar y un mensaje instructivo.
 class AliasCard extends StatelessWidget {
   /// El alias que se mostrará (por ejemplo, 'Estilodevida.ok').
@@ -42,7 +44,6 @@ class AliasCard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Alias:'),
             Icon(
               Icons.wallet,
               size: 48,
@@ -50,21 +51,23 @@ class AliasCard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
+            const Text('Alias:'),
+
             // Texto del alias
 
             Text(
               alias,
-              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 10),
 
             // Botón para copiar el alias
             ElevatedButton.icon(
               onPressed: () => _copyAlias(context),
-              icon: const Icon(Icons.copy, color: Colors.white),
+              icon: const Icon(Icons.copy, color: blue),
               label: const Text(
                 'Copiar Alias',
                 style: TextStyle(color: Colors.black),
@@ -81,7 +84,6 @@ class AliasCard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Mensaje instructivo
             Text(
               'Después de hacer la transferencia, envía el comprobante al: $phoneNumber',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(

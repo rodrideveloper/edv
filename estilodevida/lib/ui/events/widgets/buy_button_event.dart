@@ -137,7 +137,7 @@ class _BuyButtonEventState extends State<BuyButtonEvent> {
         method: method,
       );
 
-      GoRouter.of(context).push('/pending_event');
+      GoRouter.of(context).push('/pending');
     } catch (err, stack) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
