@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:estilodevida/ui/login/apple_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -102,7 +104,7 @@ class _LoginFormState extends State<LoginForm> {
                         const SizedBox(height: 30),
                         const GoogleLoginButton(),
                         const SizedBox(height: 10),
-                        const AppleLoginButton(),
+                        if (Platform.isIOS) const AppleLoginButton(),
                         const SizedBox(height: 40),
                         _buildPrivacyPolicyLink(context),
                         _buildDeleteUserLink(context),
