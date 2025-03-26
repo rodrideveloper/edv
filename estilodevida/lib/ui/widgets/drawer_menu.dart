@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:estilodevida/services/app_info/app_info.dart';
 import 'package:estilodevida/services/auth_service/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -86,6 +88,16 @@ class CustomDrawer extends StatelessWidget {
                       ?.copyWith(color: Colors.white)),
               onTap: () => GoRouter.of(context).push('/my_events'),
             ),
+            if (Platform.isIOS)
+              ListTile(
+                leading: const Icon(Icons.delete_sharp, color: Colors.white),
+                title: Text(
+                  'Eliminar cuenta',
+                  style:
+                      theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
+                ),
+                onTap: () => GoRouter.of(context).push('/delete_acc'),
+              ),
             const Spacer(),
             ListTile(
               title: Text(AppInfo().getAppVersion(),

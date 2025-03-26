@@ -5,6 +5,7 @@ import 'package:estilodevida/services/app_info/app_info.dart';
 import 'package:estilodevida/services/auth_service/auth_service.dart';
 import 'package:estilodevida/services/shared_preference/user_preferences.dart';
 import 'package:estilodevida/ui/constants.dart';
+import 'package:estilodevida/ui/delete_acc/delete_acc.dart';
 import 'package:estilodevida/ui/events/events.dart';
 import 'package:estilodevida/ui/events/widgets/pending_event_payment.dart';
 import 'package:estilodevida/ui/lessons_avalibles.dart';
@@ -153,6 +154,10 @@ GoRouter createRouter(User? auth) {
       GoRoute(
         path: '/my_events',
         builder: (_, __) => const MyEvents(),
+      ),
+      GoRoute(
+        path: '/delete_acc',
+        builder: (_, __) => const DeleteAccountScreen(),
       ),
     ],
     redirect: (context, state) {
