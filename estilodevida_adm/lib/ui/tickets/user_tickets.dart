@@ -7,6 +7,256 @@ import 'package:intl/intl.dart';
 import 'package:estilodevida_adm/model/event_pay/event_pay.dart';
 import 'package:estilodevida_adm/service/event_service.dart';
 
+// class EventUsersScreen extends StatefulWidget {
+//   const EventUsersScreen({super.key});
+
+//   @override
+//   State<EventUsersScreen> createState() => _EventUsersScreenState();
+// }
+
+// class _EventUsersScreenState extends State<EventUsersScreen> {
+//   final _eventService = EventService();
+//   final _eventPayService = EventPayService();
+
+//   // Lista de eventos obtenidos del Stream.
+//   List<EventModel> _events = [];
+
+//   // En lugar de EventModel, guardamos el *id* del evento seleccionado.
+//   String? _selectedEventId;
+
+//   // Controlador y texto de búsqueda
+//   final TextEditingController _searchController = TextEditingController();
+//   String _searchQuery = '';
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Usuarios por Evento'),
+//       ),
+//       body: Column(
+//         children: [
+//           // StreamBuilder para mostrar todos los eventos en un Dropdown
+//           StreamBuilder<List<EventModel>>(
+//             stream: _eventService.getAllEvents(),
+//             builder: (context, snapshot) {
+//               if (snapshot.hasError) {
+//                 return Text('Error al cargar eventos: ${snapshot.error}');
+//               }
+//               if (!snapshot.hasData) {
+//                 return const Padding(
+//                   padding: EdgeInsets.all(16.0),
+//                   child: CircularProgressIndicator(),
+//                 );
+//               }
+
+//               _events = snapshot.data!;
+//               if (_events.isEmpty) {
+//                 return const Padding(
+//                   padding: EdgeInsets.all(16.0),
+//                   child: Text('No hay eventos disponibles.'),
+//                 );
+//               }
+
+//               return Padding(
+//                 padding: const EdgeInsets.all(16.0),
+//                 child: DropdownButton<String>(
+//                   isExpanded: true,
+//                   hint: const Text('Selecciona un evento'),
+//                   value: _selectedEventId,
+//                   items: _events.map((event) {
+//                     return DropdownMenuItem<String>(
+//                       value: event.id, // <-- Usar ID como value
+//                       child: Text(event.title),
+//                     );
+//                   }).toList(),
+//                   onChanged: (newValue) {
+//                     setState(() {
+//                       _selectedEventId = newValue;
+//                       _searchQuery = ''; // Reseteamos la búsqueda
+//                       _searchController.text = '';
+//                     });
+//                   },
+//                 ),
+//               );
+//             },
+//           ),
+
+//           // Barra de búsqueda, sólo visible si ya se seleccionó un evento
+//           if (_selectedEventId != null)
+//             Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 16.0),
+//               child: TextField(
+//                 controller: _searchController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'Buscar usuario...',
+//                   prefixIcon: Icon(Icons.search),
+//                 ),
+//                 onChanged: (value) {
+//                   setState(() {
+//                     _searchQuery = value;
+//                   });
+//                 },
+//               ),
+//             ),
+
+//           // Si no se ha seleccionado evento, mostramos un mensaje
+//           if (_selectedEventId == null)
+//             const Expanded(
+//               child: Center(
+//                 child: Text('Selecciona un evento para ver los usuarios.'),
+//               ),
+//             )
+//           else
+//             // StreamBuilder para usuarios que compraron entradas de _selectedEventId
+//             Expanded(
+//               child: StreamBuilder<List<EventPay>>(
+//                 stream: _eventPayService
+//                     .getApprovedEventPaysByEventId(_selectedEventId!),
+//                 builder: (context, snapshot) {
+//                   if (snapshot.hasError) {
+//                     return Center(
+//                       child: Text(
+//                           'Error al cargar las entradas: ${snapshot.error}'),
+//                     );
+//                   }
+//                   if (!snapshot.hasData) {
+//                     return const Center(child: CircularProgressIndicator());
+//                   }
+
+//                   // Obtenemos la lista completa de entradas aprobadas
+//                   final eventPays = snapshot.data!;
+
+//                   // Filtramos la lista según el _searchQuery
+//                   final filteredPays = eventPays.where((pay) {
+//                     final name = pay.userName.toLowerCase();
+//                     final query = _searchQuery.toLowerCase();
+//                     return name.contains(query);
+//                   }).toList();
+
+//                   if (filteredPays.isEmpty) {
+//                     return const Center(
+//                       child: Text('No hay usuarios con entradas aprobadas.'),
+//                     );
+//                   }
+
+//                   return ListView.builder(
+//                     itemCount: filteredPays.length,
+//                     itemBuilder: (context, index) {
+//                       final pay = filteredPays[index];
+//                       return EventPayTile(
+//                         eventPay: pay,
+//                         index: index,
+//                       );
+//                     },
+//                   );
+//                 },
+//               ),
+//             ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// class EventPayTile extends StatelessWidget {
+//   final EventPay eventPay;
+//   final int index;
+
+//   const EventPayTile({
+//     super.key,
+//     required this.eventPay,
+//     required this.index,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final dateFormatter = DateFormat('yyyy-MM-dd');
+//     final timeFormatter = DateFormat('HH:mm');
+
+//     final Color cardColor = index.isEven
+//         ? const Color(0xFFFFFFFF) // Blanco
+//         : const Color(0xFFF8F8F8); // Gris claro
+
+//     return Card(
+//       color: cardColor,
+//       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+//       shape: RoundedRectangleBorder(
+//         borderRadius: BorderRadius.circular(10.0),
+//         side: const BorderSide(color: Color(0xFFDDDDDD)),
+//       ),
+//       elevation: 2,
+//       child: ListTile(
+//         leading: CircleAvatar(
+//           backgroundColor: Colors.grey.shade400,
+//           child: const Icon(
+//             Icons.person,
+//             color: Colors.white,
+//           ),
+//         ),
+//         title: Text(
+//           eventPay.userName.isNotEmpty ? eventPay.userName : 'Sin nombre',
+//           style: const TextStyle(
+//             color: Colors.black87,
+//             fontWeight: FontWeight.bold,
+//           ),
+//         ),
+//         subtitle: Row(
+//           children: [
+//             Text(dateFormatter.format(eventPay.date)),
+//             const Text(' - '),
+//             Text(timeFormatter.format(eventPay.date)),
+//           ],
+//         ),
+//         trailing: ElevatedButton(
+//           onPressed: () async {
+//             // Mostramos el diálogo de confirmación
+//             final confirm = await showDialog<bool>(
+//               context: context,
+//               builder: (context) {
+//                 return AlertDialog(
+//                   title: const Text('Confirmar eliminación'),
+//                   content: const Text(
+//                       '¿Está seguro de que desea eliminar este registro?'),
+//                   actions: [
+//                     TextButton(
+//                       onPressed: () => Navigator.pop(context, false),
+//                       child: const Text('Cancelar'),
+//                     ),
+//                     TextButton(
+//                       onPressed: () => Navigator.pop(context, true),
+//                       child: const Text('Eliminar'),
+//                     ),
+//                   ],
+//                 );
+//               },
+//             );
+
+//             // Si el usuario confirma, eliminamos
+//             if (confirm == true) {
+//               await EventPayService().deleteEventPay(eventPay.id);
+//             }
+//           },
+//           style: ElevatedButton.styleFrom(
+//             backgroundColor: purple,
+//             shape: RoundedRectangleBorder(
+//               borderRadius: BorderRadius.circular(8),
+//             ),
+//             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+//           ),
+//           child: const Text(
+//             'Eliminar',
+//             style: TextStyle(
+//               color: Colors.white,
+//               fontWeight: FontWeight.bold,
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 class EventUsersScreen extends StatefulWidget {
   const EventUsersScreen({super.key});
 
@@ -28,6 +278,9 @@ class _EventUsersScreenState extends State<EventUsersScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
 
+  // Set para guardar los IDs de los pagos (usuarios) seleccionados.
+  final Set<String> _selectedEventPayIds = {};
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +289,7 @@ class _EventUsersScreenState extends State<EventUsersScreen> {
       ),
       body: Column(
         children: [
-          // StreamBuilder para mostrar todos los eventos en un Dropdown
+          // Dropdown de eventos
           StreamBuilder<List<EventModel>>(
             stream: _eventService.getAllEvents(),
             builder: (context, snapshot) {
@@ -49,7 +302,6 @@ class _EventUsersScreenState extends State<EventUsersScreen> {
                   child: CircularProgressIndicator(),
                 );
               }
-
               _events = snapshot.data!;
               if (_events.isEmpty) {
                 return const Padding(
@@ -57,7 +309,6 @@ class _EventUsersScreenState extends State<EventUsersScreen> {
                   child: Text('No hay eventos disponibles.'),
                 );
               }
-
               return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: DropdownButton<String>(
@@ -66,15 +317,17 @@ class _EventUsersScreenState extends State<EventUsersScreen> {
                   value: _selectedEventId,
                   items: _events.map((event) {
                     return DropdownMenuItem<String>(
-                      value: event.id, // <-- Usar ID como value
+                      value: event.id, // Usamos el ID como value
                       child: Text(event.title),
                     );
                   }).toList(),
                   onChanged: (newValue) {
                     setState(() {
                       _selectedEventId = newValue;
-                      _searchQuery = ''; // Reseteamos la búsqueda
+                      _searchQuery = '';
                       _searchController.text = '';
+                      _selectedEventPayIds
+                          .clear(); // Limpiamos selección al cambiar de evento.
                     });
                   },
                 ),
@@ -82,7 +335,7 @@ class _EventUsersScreenState extends State<EventUsersScreen> {
             },
           ),
 
-          // Barra de búsqueda, sólo visible si ya se seleccionó un evento
+          // Barra de búsqueda (si se ha seleccionado un evento)
           if (_selectedEventId != null)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -108,7 +361,7 @@ class _EventUsersScreenState extends State<EventUsersScreen> {
               ),
             )
           else
-            // StreamBuilder para usuarios que compraron entradas de _selectedEventId
+            // StreamBuilder para mostrar las entradas aprobadas
             Expanded(
               child: StreamBuilder<List<EventPay>>(
                 stream: _eventPayService
@@ -116,18 +369,17 @@ class _EventUsersScreenState extends State<EventUsersScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Center(
-                      child: Text(
-                          'Error al cargar las entradas: ${snapshot.error}'),
-                    );
+                        child: Text(
+                            'Error al cargar las entradas: ${snapshot.error}'));
                   }
                   if (!snapshot.hasData) {
                     return const Center(child: CircularProgressIndicator());
                   }
 
-                  // Obtenemos la lista completa de entradas aprobadas
+                  // Lista completa de entradas aprobadas.
                   final eventPays = snapshot.data!;
 
-                  // Filtramos la lista según el _searchQuery
+                  // Filtramos según la búsqueda.
                   final filteredPays = eventPays.where((pay) {
                     final name = pay.userName.toLowerCase();
                     final query = _searchQuery.toLowerCase();
@@ -144,9 +396,21 @@ class _EventUsersScreenState extends State<EventUsersScreen> {
                     itemCount: filteredPays.length,
                     itemBuilder: (context, index) {
                       final pay = filteredPays[index];
+                      final isSelected = _selectedEventPayIds.contains(pay.id);
                       return EventPayTile(
                         eventPay: pay,
                         index: index,
+                        isSelected: isSelected,
+                        onTap: () {
+                          setState(() {
+                            // Alterna el estado de selección.
+                            if (isSelected) {
+                              _selectedEventPayIds.remove(pay.id);
+                            } else {
+                              _selectedEventPayIds.add(pay.id);
+                            }
+                          });
+                        },
                       );
                     },
                   );
@@ -155,6 +419,47 @@ class _EventUsersScreenState extends State<EventUsersScreen> {
             ),
         ],
       ),
+      // Botón para eliminar todos los seleccionados.
+      floatingActionButton: _selectedEventPayIds.isNotEmpty
+          ? FloatingActionButton.extended(
+              onPressed: () async {
+                // Confirmación de eliminación
+                final confirm = await showDialog<bool>(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Confirmar eliminación'),
+                      content: const Text(
+                          '¿Está seguro de que desea eliminar los registros seleccionados?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, false),
+                          child: const Text('Cancelar'),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, true),
+                          child: const Text('Eliminar'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+                if (confirm == true) {
+                  // Eliminamos cada usuario seleccionado
+                  // for (String id in _selectedEventPayIds) {
+                  //   await _eventPayService.deleteEventPay(id);
+                  // }
+                  // Limpiamos la selección
+                  setState(() {
+                    _selectedEventPayIds.clear();
+                  });
+                }
+              },
+              label: const Text('Eliminar seleccionados'),
+              icon: const Icon(Icons.delete),
+              backgroundColor: Colors.red,
+            )
+          : null,
     );
   }
 }
@@ -162,11 +467,15 @@ class _EventUsersScreenState extends State<EventUsersScreen> {
 class EventPayTile extends StatelessWidget {
   final EventPay eventPay;
   final int index;
+  final bool isSelected;
+  final VoidCallback onTap;
 
   const EventPayTile({
     super.key,
     required this.eventPay,
     required this.index,
+    required this.isSelected,
+    required this.onTap,
   });
 
   @override
@@ -187,17 +496,31 @@ class EventPayTile extends StatelessWidget {
       ),
       elevation: 2,
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: Colors.grey.shade400,
-          child: const Icon(
-            Icons.person,
-            color: Colors.white,
-          ),
+        onTap: onTap, // Al pulsar se alterna la selección.
+        leading: Stack(
+          alignment: Alignment.center,
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.grey.shade400,
+              child: const Icon(Icons.person, color: Colors.white),
+            ),
+            // Si está seleccionado mostramos un check superpuesto.
+            if (isSelected)
+              const Positioned(
+                right: -2,
+                bottom: -2,
+                child: Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                  size: 20,
+                ),
+              ),
+          ],
         ),
         title: Text(
           eventPay.userName.isNotEmpty ? eventPay.userName : 'Sin nombre',
-          style: const TextStyle(
-            color: Colors.black87,
+          style: TextStyle(
+            color: isSelected ? Colors.green : Colors.black87,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -210,7 +533,7 @@ class EventPayTile extends StatelessWidget {
         ),
         trailing: ElevatedButton(
           onPressed: () async {
-            // Mostramos el diálogo de confirmación
+            // Muestra diálogo de confirmación individual.
             final confirm = await showDialog<bool>(
               context: context,
               builder: (context) {
@@ -231,8 +554,6 @@ class EventPayTile extends StatelessWidget {
                 );
               },
             );
-
-            // Si el usuario confirma, eliminamos
             if (confirm == true) {
               await EventPayService().deleteEventPay(eventPay.id);
             }
