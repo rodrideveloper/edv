@@ -113,13 +113,13 @@ class AuthService {
         ],
       );
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: appleCredential.authorizationCode,
+      final oauthCredential = OAuthProvider("apple.com").credential(
         idToken: appleCredential.identityToken,
+        accessToken: appleCredential.authorizationCode,
       );
 
       final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+          await FirebaseAuth.instance.signInWithCredential(oauthCredential);
       final User? user = userCredential.user;
 
       if (user != null) {

@@ -30,6 +30,8 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.496833297972-p1vd6593oeqi4s7an2a7v0dr10b1ut3k</string>
+				<string>com.academia.estilodevida</string> 
+
 			</array>
 		</dict>
 	</array>
