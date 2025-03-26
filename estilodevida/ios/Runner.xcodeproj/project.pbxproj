@@ -204,7 +204,7 @@
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				286E77BDE73EFF961F891968 /* [CP] Embed Pods Frameworks */,
 				D3B8FD1F98312A603E2F8FCA /* [CP] Copy Pods Resources */,
-				96DD6EDF1D4DAB9B3DC7223D /* FlutterFire: "flutterfire upload-crashlytics-symbols" */,
+				47080FA286E3EFF204D39B14 /* FlutterFire: "flutterfire upload-crashlytics-symbols" */,
 			);
 			buildRules = (
 			);
@@ -332,7 +332,7 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
 		};
-		96DD6EDF1D4DAB9B3DC7223D /* FlutterFire: "flutterfire upload-crashlytics-symbols" */ = {
+		47080FA286E3EFF204D39B14 /* FlutterFire: "flutterfire upload-crashlytics-symbols" */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
