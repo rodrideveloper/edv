@@ -11,6 +11,11 @@ class UserService {
       return snapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data();
         data['id'] = doc.id;
+        try {
+          return UserModel.fromJson(data);
+        } catch (err, stack) {
+          print(err);
+        }
 
         return UserModel.fromJson(data);
       }).toList();

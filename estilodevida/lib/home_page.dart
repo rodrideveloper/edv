@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:estilodevida/error_handler.dart';
 import 'package:estilodevida/ui/constants.dart';
 import 'package:estilodevida/ui/home_view.dart';
@@ -47,6 +49,9 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> checkForUpdate() async {
     try {
+      if (Platform.isIOS) {
+        return;
+      }
       final updateInfo = await InAppUpdate.checkForUpdate();
       if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
         final result = await InAppUpdate.startFlexibleUpdate();

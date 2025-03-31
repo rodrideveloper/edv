@@ -84,6 +84,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                       filled: true,
                       fillColor: Colors.white,
                       iconColor: Colors.white,
+                      errorStyle: TextStyle(color: Colors.white),
                       labelText: 'Confirmar eliminación',
                       border: OutlineInputBorder(),
                     ),
@@ -105,6 +106,10 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                               GlobalMessageService().showMessage(
                                 context,
                                 'Su solicitud fue recibida, gracias',
+                              );
+                              Navigator.popUntil(
+                                context,
+                                (route) => route.isFirst,
                               );
                             }
                           },

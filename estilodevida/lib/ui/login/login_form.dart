@@ -107,7 +107,7 @@ class _LoginFormState extends State<LoginForm> {
                         if (Platform.isIOS) const AppleLoginButton(),
                         const SizedBox(height: 40),
                         _buildPrivacyPolicyLink(context),
-                        _buildDeleteUserLink(context),
+                        if (Platform.isAndroid) _buildDeleteUserLink(context),
                       ],
                     ),
                   ),
