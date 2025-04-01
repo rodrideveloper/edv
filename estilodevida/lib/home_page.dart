@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:estilodevida/error_handler.dart';
+import 'package:estilodevida/models/user/user_model.dart';
 import 'package:estilodevida/ui/constants.dart';
 import 'package:estilodevida/ui/home_view.dart';
 import 'package:estilodevida/ui/widgets/background_waves.dart';
@@ -91,7 +92,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.watch<User?>();
+    final user = context.watch<UserModel?>();
 
     return Scaffold(
       extendBodyBehindAppBar: true,

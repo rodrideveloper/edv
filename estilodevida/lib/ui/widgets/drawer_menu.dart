@@ -98,6 +98,15 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 onTap: () => GoRouter.of(context).push('/delete_acc'),
               ),
+            ListTile(
+              leading: const Icon(Icons.person, color: Colors.white),
+              title: Text(
+                'Mi Perfil',
+                style:
+                    theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              ),
+              onTap: () => GoRouter.of(context).push('/my_profile'),
+            ),
             const Spacer(),
             ListTile(
               title: Text(AppInfo().getAppVersion(),

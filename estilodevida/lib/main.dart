@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:estilodevida/error_handler.dart';
 import 'package:estilodevida/home_page.dart';
+import 'package:estilodevida/models/user/user_model.dart';
 import 'package:estilodevida/services/app_info/app_info.dart';
 import 'package:estilodevida/services/auth_service/auth_service.dart';
 import 'package:estilodevida/services/shared_preference/user_preferences.dart';
+import 'package:estilodevida/services/user_service.dart/user_service.dart';
 import 'package:estilodevida/ui/constants.dart';
 import 'package:estilodevida/ui/delete_acc/delete_acc.dart';
 import 'package:estilodevida/ui/events/events.dart';
@@ -15,6 +18,7 @@ import 'package:estilodevida/ui/packs/packs.dart';
 import 'package:estilodevida/ui/packs/payment_error.dart';
 import 'package:estilodevida/ui/packs/payment_pending.dart';
 import 'package:estilodevida/ui/packs/payment_success.dart';
+import 'package:estilodevida/ui/profile/profile.dart';
 import 'package:estilodevida/ui/register_lesson/animation.dart';
 import 'package:estilodevida/ui/register_lesson/register_lesson.dart';
 import 'package:estilodevida/ui/register_lesson/selected_lesson.dart';
@@ -75,6 +79,18 @@ class AppWrapper extends StatelessWidget {
         StreamProvider<User?>.value(
           initialData: null,
           value: AuthService().user,
+        ),
+        StreamProvider<UserModel?>.value(
+          initialData: null,
+          value: UserService().user,
+          catchError: (context, err) {
+            errorHandler(
+                err: err,
+                stack: StackTrace.current,
+                reason: 'error en  StreamProvider<UserModel?>.value(',
+                information: []);
+            return null;
+          },
         ),
       ],
       child: const App(),
@@ -158,6 +174,10 @@ GoRouter createRouter(User? auth) {
       GoRoute(
         path: '/delete_acc',
         builder: (_, __) => const DeleteAccountScreen(),
+      ),
+      GoRoute(
+        path: '/my_profile',
+        builder: (context, state) => const Profile(),
       ),
     ],
     redirect: (context, state) {
