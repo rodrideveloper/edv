@@ -1,6 +1,6 @@
+import 'package:estilodevida/models/user/user_model.dart';
 import 'package:estilodevida/ui/widgets/footer_image_bk.dart';
 import 'package:estilodevida/ui/widgets/lessons_remains.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -9,12 +9,12 @@ class HomeView extends StatelessWidget {
     required this.user,
   });
 
-  final User user;
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    String name = user.displayName?.split(' ')[0] ?? '';
+    String name = user.name?.split(' ')[0] ?? '';
     return Stack(
       children: [
         const FooterImageBackground(),

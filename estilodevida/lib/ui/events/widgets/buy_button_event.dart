@@ -1,5 +1,6 @@
 import 'package:estilodevida/error_handler.dart';
 import 'package:estilodevida/models/events/event_model.dart';
+import 'package:estilodevida/models/user/user_model.dart';
 import 'package:estilodevida/services/event_service/event_service.dart';
 import 'package:estilodevida/services/http_service/http_service.dart';
 import 'package:estilodevida/ui/constants.dart';
@@ -127,8 +128,12 @@ class _BuyButtonEventState extends State<BuyButtonEvent> {
   Future<void> manualPay(
     Method method,
   ) async {
-    final user = context.read<User?>();
+    final user = context.read<UserModel?>();
     if (user == null) return;
+
+    if (!_checkUserData(user)) {
+      return;
+    }
 
     try {
       await EventService().addManualPay(
@@ -156,7 +161,7 @@ class _BuyButtonEventState extends State<BuyButtonEvent> {
         reason: 'Pago manual evento',
         information: [
           {
-            'user': user.uid,
+            'user': user.id,
             'eventId': widget.event.id,
           }
         ],
@@ -233,6 +238,33 @@ class _BuyButtonEventState extends State<BuyButtonEvent> {
         context,
         'Ups, tuvimos un error. Contacta al soporte.',
       );
+
+  bool _checkUserData(
+    UserModel user,
+  ) {
+    String result = '';
+    if (user.phone == null || user.phone!.isEmpty) {
+      result = 'Telefono';
+    }
+
+    if (user.email == null || user.email!.isEmpty) {
+      result = 'Correo';
+    }
+
+    if (user.name == null || user.name!.isEmpty) {
+      result = 'Nombre';
+    }
+
+    if (result.isNotEmpty) {
+      showCustomSnackBar(
+        context,
+        'Antes de adquirir su entrada por favor complete su $result en su perfil.',
+      );
+      return false;
+    }
+
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {

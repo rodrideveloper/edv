@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estilodevida/models/event_pay/event_pay.dart';
 import 'package:estilodevida/models/events/event_model.dart';
+import 'package:estilodevida/models/user/user_model.dart';
 import 'package:estilodevida/ui/packs/widgets/buy_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -10,7 +11,7 @@ class EventService {
 
   Future<void> addManualPay({
     required EventModel event,
-    required User user,
+    required UserModel user,
     required Method method,
   }) async {
     final docRef = _eventsRef.doc();
@@ -20,8 +21,8 @@ class EventService {
       'date': Timestamp.fromDate(DateTime.now()),
       'eventName': event.title,
       'eventId': event.id,
-      'userName': user.displayName,
-      'userId': user.uid,
+      'userName': user.name,
+      'userId': user.id,
       'status': false,
       'metodo': method.name,
     };
