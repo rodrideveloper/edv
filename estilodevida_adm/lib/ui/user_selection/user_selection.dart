@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:estilodevida_adm/model/user/user_model.dart';
 import 'package:estilodevida_adm/service/user_service.dart';
 import 'package:estilodevida_adm/ui/user_packs_admin/user_packs_admin.dart';
-import 'package:cached_network_image/cached_network_image.dart'; // Importar el paquete
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:url_launcher/url_launcher.dart'; // Importar el paquete
 
 // Definición de colores elegantes
 const Color accentColor = Color(0xFFFF4081); // Pink Accent
@@ -186,13 +187,31 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  user.name,
-                                  style: const TextStyle(
-                                    color: textColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      user.name,
+                                      style: const TextStyle(
+                                        color: textColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          openWhatsAppWeb(user.phone),
+                                      child: Text(
+                                        user.phone ?? '',
+                                        style: const TextStyle(
+                                          color: subtitleColor,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
@@ -222,5 +241,15 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
         },
       ),
     );
+  }
+
+  void openWhatsAppWeb(
+    String? phone,
+  ) async {
+    if (phone == null) {
+      return;
+    }
+    final Uri url = Uri.parse('https://wa.me/$phone');
+    await launchUrl(url, mode: LaunchMode.externalApplication);
   }
 }
