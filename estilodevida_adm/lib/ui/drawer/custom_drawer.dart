@@ -5,6 +5,7 @@ import 'package:estilodevida_adm/ui/manual_pay/manual_pay.dart';
 import 'package:estilodevida_adm/ui/tickets/user_tickets.dart';
 import 'package:estilodevida_adm/ui/user_selection/user_selection.dart';
 import 'package:estilodevida_adm/ui/utils.dart';
+import 'package:estilodevida_adm/ui/statistics_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -121,6 +122,21 @@ class CustomDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const EventUsersScreen(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.bar_chart,
+              color: blue,
+            ),
+            title: const Text('Estadísticas'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const StatisticsPage(),
                 ),
               );
             },
