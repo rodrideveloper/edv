@@ -33,7 +33,6 @@ class AuthService {
   Future<List<void>> signOut() async {
     return Future.wait(
       [
-        FirebaseMessaging.instance.deleteToken(),
         FirebaseFirestore.instance.terminate(),
         FirebaseFirestore.instance.clearPersistence(),
         _auth.signOut(),
@@ -88,13 +87,32 @@ class AuthService {
       final User? user = userCredential.user;
 
       if (user != null) {
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-          'email': user.email,
-          'name': user.displayName,
-          'photoURL': user.photoURL,
-          'phone': user.phoneNumber,
+        final userDoc =
+            FirebaseFirestore.instance.collection('users').doc(user.uid);
+
+        Map<String, dynamic> userData = {
+          'id': user.uid,
           'createdAt': FieldValue.serverTimestamp(),
-        }, SetOptions(merge: true));
+        };
+
+        if (user.displayName != null) {
+          userData['name'] = user.displayName;
+        }
+
+        if (user.photoURL != null) {
+          userData['photoURL'] = user.photoURL;
+        }
+
+        if (user.phoneNumber != null) {
+          userData['phone'] = user.phoneNumber;
+        }
+
+        if (user.email != null) {
+          userData['email'] = user.email;
+        }
+
+        await userDoc.set(userData, SetOptions(merge: true));
+
         return AuthResult.success();
       } else {
         return AuthResult.error("Error al autenticar el usuario");
@@ -123,13 +141,31 @@ class AuthService {
       final User? user = userCredential.user;
 
       if (user != null) {
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-          'email': user.email,
-          'name': user.displayName,
-          'photoURL': user.photoURL,
-          'phone': user.phoneNumber,
+        final userDoc =
+            FirebaseFirestore.instance.collection('users').doc(user.uid);
+
+        Map<String, dynamic> userData = {
+          'id': user.uid,
           'createdAt': FieldValue.serverTimestamp(),
-        }, SetOptions(merge: true));
+        };
+
+        if (user.displayName != null) {
+          userData['name'] = user.displayName;
+        }
+
+        if (user.photoURL != null) {
+          userData['photoURL'] = user.photoURL;
+        }
+
+        if (user.phoneNumber != null) {
+          userData['phone'] = user.phoneNumber;
+        }
+
+        if (user.email != null) {
+          userData['email'] = user.email;
+        }
+
+        await userDoc.set(userData, SetOptions(merge: true));
         return AuthResult.success();
       } else {
         return AuthResult.error("Error al autenticar el usuario");
@@ -137,6 +173,10 @@ class AuthService {
     } catch (e) {
       return AuthResult.error("Error al autenticar el usuario");
     }
+  }
+
+  Stream<User?> authStateChanges() {
+    return _auth.authStateChanges();
   }
 }
 

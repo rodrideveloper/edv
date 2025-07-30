@@ -1,6 +1,6 @@
+import 'package:estilodevida/models/user/user_model.dart';
 import 'package:estilodevida/models/user_pack/user_pack.dart';
 import 'package:estilodevida/services/user_pack_service.dart/user_pack_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -11,13 +11,13 @@ class LessonRemains extends StatelessWidget {
     required this.user,
   });
 
-  final User? user;
+  final UserModel? user;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return StreamBuilder<UserPackModel?>(
-      stream: UserPackService().getActivePackStream(user!.uid),
+      stream: UserPackService().getActivePackStream(user!.id),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));

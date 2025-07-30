@@ -2,6 +2,7 @@ import 'package:estilodevida_adm/firebase_options.dart';
 import 'package:estilodevida_adm/ui/register_lesson/register_lesson.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'ui/utils.dart';
 
@@ -10,6 +11,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Inicializar los formatos de fecha para español
+  await initializeDateFormatting('es', null);
 
   runApp(const MyApp());
 }
@@ -63,7 +67,7 @@ class MyApp extends StatelessWidget {
 
         // Estilo para los Checkbox, Radio, Switch, etc.
         checkboxTheme: CheckboxThemeData(
-          fillColor: MaterialStateProperty.all(purple),
+          fillColor: WidgetStateProperty.all(purple),
         ),
 
         // Estilo para los TextFormField, TextField, etc.

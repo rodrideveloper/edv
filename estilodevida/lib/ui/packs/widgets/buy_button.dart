@@ -1,5 +1,7 @@
 import 'package:estilodevida/error_handler.dart';
+import 'package:estilodevida/models/user/user_model.dart';
 import 'package:estilodevida/services/http_service/http_service.dart';
+import 'package:estilodevida/services/message_service.dart';
 import 'package:estilodevida/services/user_pack_service.dart/user_pack_service.dart';
 import 'package:estilodevida/ui/constants.dart';
 import 'package:estilodevida/ui/packs/packs.dart';
@@ -127,7 +129,14 @@ class _BuyButtonPackState extends State<BuyButtonPack> {
   Future<void> manualPay(
     Method method,
   ) async {
-    final user = context.read<User>();
+    final user = context.read<UserModel?>();
+    if (user == null) {
+      return;
+    }
+
+    if (!_checkUserData(user)) {
+      return;
+    }
     try {
       await UserPackService().addManualPay(
         widget.pack,
@@ -149,7 +158,7 @@ class _BuyButtonPackState extends State<BuyButtonPack> {
 
       errorHandler(err: err, stack: stack, reason: 'Pago manual', information: [
         {
-          'user': user.uid,
+          'user': user.id,
           'pack': widget.pack.id,
         }
       ]);
@@ -263,5 +272,32 @@ class _BuyButtonPackState extends State<BuyButtonPack> {
               color: Colors.white,
             ),
     );
+  }
+
+  bool _checkUserData(
+    UserModel user,
+  ) {
+    String result = '';
+    if (user.phone == null || user.phone!.isEmpty) {
+      result = 'Telefono';
+    }
+
+    if (user.email == null || user.email!.isEmpty) {
+      result = 'Correo';
+    }
+
+    if (user.name == null || user.name!.isEmpty) {
+      result = 'Nombre';
+    }
+
+    if (result.isNotEmpty) {
+      showCustomSnackBar(
+        context,
+        'Antes de adquirir su pack por favor complete su $result en su perfil.',
+      );
+      return false;
+    }
+
+    return true;
   }
 }

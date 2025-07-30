@@ -1,6 +1,7 @@
 // file: user_service.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estilodevida_adm/model/user/user_model.dart';
+import 'package:flutter/foundation.dart';
 
 class UserService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -13,8 +14,8 @@ class UserService {
         data['id'] = doc.id;
         try {
           return UserModel.fromJson(data);
-        } catch (err, stack) {
-          print(err);
+        } catch (err) {
+          debugPrint('Error parsing user data: $err');
         }
 
         return UserModel.fromJson(data);
